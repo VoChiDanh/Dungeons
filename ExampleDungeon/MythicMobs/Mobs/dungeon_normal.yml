@@ -1,0 +1,311 @@
+ZOMBIE_1:
+  Type: ZOMBIE
+  Equipment:
+  - WOODEN_AXE HAND
+  Health: 30
+  Damage: 3
+  Faction: dungeon_normal
+  Display: '&7[MD I]&e Zombie'
+  Nameplate:
+    Enabled: true
+  HealthBar:
+    Enabled: true
+    Offset: 1.45
+  Options:
+    MovementSpeed: 0.2
+    AlwaysShowName: true
+    DigOutOfGround: true
+    Despawn: PERSISTENT
+    Glowing: true
+    Interactable: false 
+    PreventItemPickup: true
+    PreventLeashing: true
+    PreventMobKillDrops: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventRenaming: true
+    PreventSunburn: true
+    PerPlayerDrops: true
+    ClientsideDrops: true
+    ItemGlowByDefault: true
+    HologramItemNames: true
+
+ZOMBIE_2:
+  Type: ZOMBIE
+  Equipment:
+  - STONE_AXE HAND
+  Health: 60
+  Damage: 6
+  Faction: dungeon_normal
+  Display: '&7[MD II]&e Zombie'
+  Nameplate:
+    Enabled: true
+  HealthBar:
+    Enabled: true
+    Offset: 1.45
+  Options:
+    MovementSpeed: 0.2
+    AlwaysShowName: true
+    DigOutOfGround: true
+    Despawn: PERSISTENT
+    Glowing: true
+    Interactable: false 
+    PreventItemPickup: true
+    PreventLeashing: true
+    PreventMobKillDrops: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventRenaming: true
+    PreventSunburn: true
+    PerPlayerDrops: true
+    ClientsideDrops: true
+    ItemGlowByDefault: true
+    HologramItemNames: true
+
+ZOMBIE_3:
+  Type: ZOMBIE
+  Equipment:
+  - IRON_AXE HAND
+  Health: 120
+  Damage: 12
+  Faction: dungeon_normal
+  Display: '&7[MD III]&e Zombie'
+  Nameplate:
+    Enabled: true
+  HealthBar:
+    Enabled: true
+    Offset: 1.45
+  Options:
+    MovementSpeed: 0.2
+    AlwaysShowName: true
+    DigOutOfGround: true
+    Despawn: PERSISTENT
+    Glowing: true
+    Interactable: false 
+    PreventItemPickup: true
+    PreventLeashing: true
+    PreventMobKillDrops: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventRenaming: true
+    PreventSunburn: true
+    PerPlayerDrops: true
+    ClientsideDrops: true
+    ItemGlowByDefault: true
+    HologramItemNames: true
+
+SKELETON_1:
+  Type: SKELETON
+  Equipment:
+  - BOW HAND
+  Health: 30
+  Damage: 3
+  Faction: dungeon_normal
+  Display: '&7[MD I]&e Skeleton'
+  Nameplate:
+    Enabled: true
+  HealthBar:
+    Enabled: true
+    Offset: 1.45
+  Options:
+    MovementSpeed: 0.2
+    AlwaysShowName: true
+    DigOutOfGround: true
+    Despawn: PERSISTENT
+    Glowing: true
+    Interactable: false 
+    PreventItemPickup: true
+    PreventLeashing: true
+    PreventMobKillDrops: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventRenaming: true
+    PreventSunburn: true
+    PerPlayerDrops: true
+    ClientsideDrops: true
+    ItemGlowByDefault: true
+    HologramItemNames: true
+
+SKELETON_2:
+  Type: SKELETON
+  Equipment:
+  - BOW HAND
+  Health: 60
+  Damage: 6
+  Faction: dungeon_normal
+  Display: '&7[MD II]&e Skeleton'
+  Nameplate:
+    Enabled: true
+  HealthBar:
+    Enabled: true
+    Offset: 1.45
+  Options:
+    MovementSpeed: 0.2
+    AlwaysShowName: true
+    DigOutOfGround: true
+    Despawn: PERSISTENT
+    Glowing: true
+    Interactable: false 
+    PreventItemPickup: true
+    PreventLeashing: true
+    PreventMobKillDrops: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventRenaming: true
+    PreventSunburn: true
+    PerPlayerDrops: true
+    ClientsideDrops: true
+    ItemGlowByDefault: true
+    HologramItemNames: true
+
+SKELETON_3:
+  Type: SKELETON
+  Equipment:
+  - BOW HAND
+  Health: 120
+  Damage: 12
+  Faction: dungeon_normal
+  Display: '&7[MD III]&e Skeleton'
+  Nameplate:
+    Enabled: true
+  HealthBar:
+    Enabled: true
+    Offset: 1.45
+  Options:
+    MovementSpeed: 0.2
+    AlwaysShowName: true
+    DigOutOfGround: true
+    Despawn: PERSISTENT
+    Glowing: true
+    Interactable: false 
+    PreventItemPickup: true
+    PreventLeashing: true
+    PreventMobKillDrops: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventRenaming: true
+    PreventSunburn: true
+    PerPlayerDrops: true
+    ClientsideDrops: true
+    ItemGlowByDefault: true
+    HologramItemNames: true
+  
+SPIDER_1:
+  Type: SPIDER
+  Health: 30
+  Damage: 3
+  Faction: dungeon_normal
+  Display: '&7[MD I]&e Spider'
+  Nameplate:
+    Enabled: true
+  HealthBar:
+    Enabled: true
+    Offset: 1.45
+  Options:
+    MovementSpeed: 0.2
+    AlwaysShowName: true
+    DigOutOfGround: true
+    Despawn: PERSISTENT
+    Glowing: true
+    Interactable: false 
+    PreventItemPickup: true
+    PreventLeashing: true
+    PreventMobKillDrops: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventRenaming: true
+    PreventSunburn: true
+    PerPlayerDrops: true
+    ClientsideDrops: true
+    ItemGlowByDefault: true
+    HologramItemNames: true
+
+SPIDER_2:
+  Type: SPIDER
+  Health: 60
+  Damage: 6
+  Faction: dungeon_normal
+  Display: '&7[MD II]&e Spider'
+  Nameplate:
+    Enabled: true
+  HealthBar:
+    Enabled: true
+    Offset: 1.45
+  Options:
+    MovementSpeed: 0.2
+    AlwaysShowName: true
+    DigOutOfGround: true
+    Despawn: PERSISTENT
+    Glowing: true
+    Interactable: false 
+    PreventItemPickup: true
+    PreventLeashing: true
+    PreventMobKillDrops: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventRenaming: true
+    PreventSunburn: true
+    PerPlayerDrops: true
+    ClientsideDrops: true
+    ItemGlowByDefault: true
+    HologramItemNames: true
+
+SPIDER_3:
+  Type: SPIDER
+  Health: 120
+  Damage: 12
+  Faction: dungeon_normal
+  Display: '&7[MD III]&e Spider'
+  Nameplate:
+    Enabled: true
+  HealthBar:
+    Enabled: true
+    Offset: 1.45
+  Options:
+    MovementSpeed: 0.2
+    AlwaysShowName: true
+    DigOutOfGround: true
+    Despawn: PERSISTENT
+    Glowing: true
+    Interactable: false 
+    PreventItemPickup: true
+    PreventLeashing: true
+    PreventMobKillDrops: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventRenaming: true
+    PreventSunburn: true
+    PerPlayerDrops: true
+    ClientsideDrops: true
+    ItemGlowByDefault: true
+    HologramItemNames: true
+
+BOSS_NORMAL:
+  Type: WARDEN
+  Health: 480
+  Damage: 24
+  Faction: dungeon_normal
+  Display: '&7[MD]&e Warden'
+  Nameplate:
+    Enabled: true
+  HealthBar:
+    Enabled: true
+    Offset: 1.45
+  Options:
+    MovementSpeed: 0.2
+    AlwaysShowName: true
+    DigOutOfGround: true
+    Despawn: PERSISTENT
+    Glowing: true
+    Interactable: false 
+    PreventItemPickup: true
+    PreventLeashing: true
+    PreventMobKillDrops: true
+    PreventOtherDrops: true
+    PreventRandomEquipment: true
+    PreventRenaming: true
+    PreventSunburn: true
+    PerPlayerDrops: true
+    ClientsideDrops: true
+    ItemGlowByDefault: true
+    HologramItemNames: true

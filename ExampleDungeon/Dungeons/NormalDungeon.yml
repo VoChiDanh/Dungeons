@@ -8,18 +8,13 @@ location:
   join: -175;85;77
   complete: world;-9;113;-433
 requirements:
-  item:
-  - MMOITEMS;MATERIAL;DUNGEON_TICKET;1
-  item_lore:
-  - §bx1 Dungeon Ticket
   info:
-  - '%bbm_level%;>=;10'
+  - '%player_level%;>=;2'
   info_lore:
-  - §bLevel higher than 10
+  - §bLevel higher than 2
 commands:
   complete:
   - eco give %player_name% 5000
-  - bbm booster %player_name% 1.2 600
 stages:
   stage_1:
     id: reach_location
