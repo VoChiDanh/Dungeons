@@ -1,0 +1,13 @@
+name: "${project.name}"
+version: ${project.version}
+main: net.danh.dungeons.Dungeons
+api-version: '1.13'
+authors: [ VoChiDanh ]
+depend:
+  - PlaceholderAPI
+softdepend:
+  - MythicMobs
+  - MMOItems
+commands:
+  Dungeons:
+    description: Main Commands

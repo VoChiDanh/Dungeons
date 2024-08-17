@@ -1,0 +1,18 @@
+admin:
+  reload_files: "<aqua>Reloaded Files!"
+
+dungeons:
+  stage:
+    reach_location: "&bReach location %x% %y% %z% - %distance% Blocks"
+    kill_mob: "&bKill %killed%/%amount% %mob%"
+  times:
+    start_soon: "&6Dungeon will begin soon"
+    start: "&eDungeon will start in <second>s"
+    end_soon: "&6Dungeon will end soon"
+    end: "&eDungeon will end in <second>s"
+
+user:
+  start_dungeon: "<aqua>Starting dungeon <name>"
+  end_dungeon: "<aqua>Done dungeon <name>"
+  check_requirements: "<red>You don't meet requirements"
+  dungeon_error: "<red>Dungeon has error so you can't join - Contact owner if you think that's error"

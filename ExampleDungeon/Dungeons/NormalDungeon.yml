@@ -1,0 +1,141 @@
+name: §aNormal Dungeon
+world: DNW
+lives: 3
+times:
+  start: 7
+  complete: 7
+location:
+  join: -175;85;77
+  complete: world;-9;113;-433
+requirements:
+  item:
+  - MMOITEMS;MATERIAL;DUNGEON_TICKET;1
+  item_lore:
+  - §bx1 Dungeon Ticket
+  info:
+  - '%bbm_level%;>=;10'
+  info_lore:
+  - §bLevel higher than 10
+commands:
+  complete:
+  - eco give %player_name% 5000
+  - bbm booster %player_name% 1.2 600
+stages:
+  stage_1:
+    id: reach_location
+    location: -138;83;77
+    distance: 5
+  stage_2:
+    id: mm_kill_mob
+    type: ZOMBIE_1
+    amount: 5
+    pre_stage:
+      id: mm_spawn_mob
+      type: ZOMBIE_1
+      amount: 5
+      location: -130;84;56
+  stage_3:
+    id: mm_kill_mob
+    type: SKELETON_1
+    amount: 5
+    pre_stage:
+      id: mm_spawn_mob
+      type: SKELETON_1
+      amount: 5
+      location: -128;84;26
+  stage_4:
+    id: mm_kill_mob
+    type: SPIDER_1
+    amount: 5
+    pre_stage:
+      id: mm_spawn_mob
+      type: SPIDER_1
+      amount: 5
+      location: -113;83;3
+  stage_5:
+    id: reach_location
+    location: -92;82;-17
+    distance: 5
+  stage_6:
+    id: mm_kill_mob
+    type: ZOMBIE_2
+    amount: 5
+    pre_stage:
+      id: mm_spawn_mob
+      type: ZOMBIE_2
+      amount: 5
+      location: -80;83;-34
+  stage_7:
+    id: reach_location
+    location: -14;82;-33
+    distance: 7
+  stage_8:
+    id: mm_kill_mob
+    type: SKELETON_2
+    amount: 5
+    pre_stage:
+      id: mm_spawn_mob
+      type: SKELETON_2
+      amount: 5
+      location: -14;83;-33
+  stage_9:
+    id: mm_kill_mob
+    type: SPIDER_2
+    amount: 5
+    pre_stage:
+      id: mm_spawn_mob
+      type: SPIDER_2
+      amount: 5
+      location: -14;82;-78
+  stage_10:
+    id: reach_location
+    location: 22;81;-106
+    distance: 5
+  stage_11:
+    id: mm_kill_mob
+    type: ZOMBIE_3
+    amount: 5
+    pre_stage:
+      id: mm_spawn_mob
+      type: ZOMBIE_3
+      amount: 5
+      location: 37;82;-112
+  stage_12:
+    id: reach_location
+    location: 53;81;-119
+    distance: 7
+  stage_13:
+    id: mm_kill_mob
+    type: SKELETON_3
+    amount: 5
+    pre_stage:
+      id: mm_spawn_mob
+      type: SKELETON_3
+      amount: 5
+      location: 53;82;-119
+  stage_14:
+    id: reach_location
+    location: 65;81;-97
+    distance: 7
+  stage_15:
+    id: mm_kill_mob
+    type: SPIDER_3
+    amount: 5
+    pre_stage:
+      id: mm_spawn_mob
+      type: SPIDER_3
+      amount: 5
+      location: 65;82;-97
+  stage_16:
+    id: reach_location
+    location: 33;79;-160
+    distance: 7
+  stage_17:
+    id: mm_kill_mob
+    type: BOSS_NORMAL
+    amount: 1
+    pre_stage:
+      id: mm_spawn_mob
+      type: BOSS_NORMAL
+      amount: 1
+      location: 33;80;-160

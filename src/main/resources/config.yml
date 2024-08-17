@@ -1,0 +1,18 @@
+settings:
+  debug: false
+  prefix: "<white>[ <aqua>Dungeons</aqua> ]"
+
+dungeon:
+  black_list_command:
+    - tpa
+    - tp
+    - tpaccept
+    - tpyes
+    - spawn
+    - warp
+  show_countdown_at:
+    - 10
+    - 5
+    - 3
+    - 2
+    - 1

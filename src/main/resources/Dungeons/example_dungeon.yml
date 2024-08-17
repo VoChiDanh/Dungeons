@@ -1,0 +1,47 @@
+name: "&aExample Dungeon"
+world: ExampleDungeonWorld
+lives: 3
+times:
+  start: 5
+  complete: 5
+location:
+  join: -9;114;-433
+  complete: world;-9;114;-433
+requirements:
+  info:
+    - "%bbm_level%;>=;3"
+    - "%bbm_level%;<=;7"
+  item:
+    - "MMOITEMS;MATERIAL;DUNGEON_TICKET;1"
+  info_lore:
+    - "&bLevel range 3 to 7"
+  item_lore:
+    - "&bx1 Dungeon Ticket"
+commands:
+  join:
+    - "eco give %player_name% 1000"
+  complete:
+    - "eco give %player_name% 1000"
+stages:
+  stage_1:
+    id: reach_location
+    location: -19;114;-483
+    distance: 5
+  stage_2:
+    id: v_kill_mob
+    type: ZOMBIE
+    amount: 3
+    pre_stage:
+      id: v_spawn_mob
+      type: ZOMBIE
+      amount: 3
+      location: -19;114;-483
+  stage_3:
+    id: mm_kill_mob
+    type: MONSTER_COAL
+    amount: 3
+    pre_stage:
+      id: mm_spawn_mob
+      type: MONSTER_COAL
+      amount: 3
+      location: -19;114;-483
