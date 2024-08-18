@@ -13,6 +13,7 @@ import net.danh.dungeons.Listeners.*;
 import net.danh.dungeons.Listeners.MythicMobs.MythicMobsKill;
 import net.danh.dungeons.Placeholder.DungeonPAPI;
 import net.danh.dungeons.Resources.Files;
+import net.danh.dungeons.Utils.UpdateChecker;
 import net.xconfig.bukkit.model.SimpleConfigurationManager;
 import org.browsit.milkgui.MilkGUI;
 import org.bukkit.Bukkit;
@@ -52,6 +53,7 @@ public final class Dungeons extends JavaPlugin {
         SimpleConfigurationManager.register(dungeons);
         MilkGUI.INSTANCE.register(dungeons);
         Files.loadFiles();
+        Files.updateFiles();
         new Dungeon_MainCMD();
         if (Bukkit.getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new DungeonPAPI().register();
@@ -68,6 +70,8 @@ public final class Dungeons extends JavaPlugin {
         }
         registerEvents(new ReachLocation(), new VanillaMobs(), new Death(), new JoinQuit(), new BlockBreak(), new Chat(), new InteractBlock(), new BlackListCMD());
         registerStages();
+        registerEvents(new UpdateChecker(dungeons));
+        new UpdateChecker(dungeons).fetch();
     }
 
     @Override

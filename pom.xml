@@ -6,13 +6,13 @@
 	
 	<groupId>net.danh</groupId>
 	<artifactId>Dungeons</artifactId>
-	<version>1.0</version>
+	<version>1.1</version>
 	<packaging>jar</packaging>
 	
 	<name>Dungeons</name>
 	
 	<properties>
-		<java.version>21</java.version>
+		<java.version>17</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	
@@ -112,7 +112,7 @@
 		<dependency>
 			<groupId>io.lumine</groupId>
 			<artifactId>Mythic-Dist</artifactId>
-			<version>5.7.0</version>
+			<version>5.6.2</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>

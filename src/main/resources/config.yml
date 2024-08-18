@@ -1,3 +1,6 @@
+version: 1
+check_update: true
+
 settings:
   debug: false
   prefix: "<white>[ <aqua>Dungeons</aqua> ]"
