@@ -30,7 +30,8 @@ public class StageEditor extends BasicGUI {
                         .build();
                 int o = i;
                 setItem(new ItemSection(i, item, "dungeon_stages_" + stageNumber + "_" + stage, e -> {
-                    if (e.getWhoClicked() instanceof Player clicker) {
+                    if (e.getWhoClicked() instanceof Player) {
+                        Player clicker = (Player) e.getWhoClicked();
                         Editor.editorStagePath.put(clicker.getName() + "_" + dungeon, "stages.stage_" + stageNumber + "." + stageDataSplit[o]);
                         Editor.editorStageType.put(clicker.getName() + "_" + dungeon, stageBase.getEditType(stageDataSplit[o]));
                         clicker.closeInventory();
@@ -49,7 +50,8 @@ public class StageEditor extends BasicGUI {
                             .build();
                     int o = i - stageDataSplit.length;
                     setItem(new ItemSection(i, item, "dungeon_stages_" + stageNumber + "_pre_stage_" + stage, e -> {
-                        if (e.getWhoClicked() instanceof Player clicker) {
+                        if (e.getWhoClicked() instanceof Player) {
+                            Player clicker = (Player) e.getWhoClicked();
                             Editor.editorStagePath.put(clicker.getName() + "_" + dungeon, "stages.stage_" + stageNumber + ".pre_stage." + stagePreDataSplit[o]);
                             Editor.editorStageType.put(clicker.getName() + "_" + dungeon, stageBase.getEditType(stagePreDataSplit[o]));
                             clicker.closeInventory();

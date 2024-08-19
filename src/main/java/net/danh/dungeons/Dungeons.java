@@ -1,7 +1,5 @@
 package net.danh.dungeons;
 
-import io.lumine.mythic.bukkit.MythicBukkit;
-import net.Indyuce.mmoitems.MMOItems;
 import net.danh.dungeons.API.DungeonsAPI;
 import net.danh.dungeons.Command.Dungeon_MainCMD;
 import net.danh.dungeons.Dungeon.StageManager;
@@ -10,9 +8,9 @@ import net.danh.dungeons.GUI.Listeners.InteractBlock;
 import net.danh.dungeons.GUI.Stages.Manager.StageBase;
 import net.danh.dungeons.GUI.Stages.Manager.StageRegistry;
 import net.danh.dungeons.Listeners.*;
-import net.danh.dungeons.Listeners.MythicMobs.MythicMobsKill;
 import net.danh.dungeons.Placeholder.DungeonPAPI;
 import net.danh.dungeons.Resources.Files;
+import net.danh.dungeons.Utils.MythicAPI;
 import net.danh.dungeons.Utils.UpdateChecker;
 import net.xconfig.bukkit.model.SimpleConfigurationManager;
 import org.browsit.milkgui.MilkGUI;
@@ -32,6 +30,7 @@ public final class Dungeons extends JavaPlugin {
     public static HashMap<String, StageBase> stageBase = new HashMap<>();
 
     private static Dungeons dungeons;
+    private static MythicAPI mythicAPI;
     private static boolean isMythicMobsInstalled = false;
     private static boolean isMMOItemsInstalled = false;
 
@@ -45,6 +44,10 @@ public final class Dungeons extends JavaPlugin {
 
     public static boolean isIsMMOItemsInstalled() {
         return isMMOItemsInstalled;
+    }
+
+    public static MythicAPI getMythicAPI() {
+        return mythicAPI;
     }
 
     @Override
@@ -61,12 +64,12 @@ public final class Dungeons extends JavaPlugin {
         DungeonsAPI.addPreStage("v_spawn_mob", "mm_spawn_mob");
         if (Bukkit.getServer().getPluginManager().getPlugin("MythicMobs") != null) {
             isMythicMobsInstalled = true;
-            registerEvents(new MythicMobsKill());
-            Dungeons.getDungeonCore().getLogger().info("Compatible with MythicMobs - Version " + MythicBukkit.inst().getDescription().getVersion());
+            mythicAPI = new MythicAPI();
+            Dungeons.getDungeonCore().getLogger().info("Compatible with MythicMobs");
         }
         if (Bukkit.getServer().getPluginManager().getPlugin("MMOItems") != null) {
             isMMOItemsInstalled = true;
-            Dungeons.getDungeonCore().getLogger().info("Compatible with MMOItems - Version " + MMOItems.plugin.getDescription().getVersion());
+            Dungeons.getDungeonCore().getLogger().info("Compatible with MMOItems");
         }
         registerEvents(new ReachLocation(), new VanillaMobs(), new Death(), new JoinQuit(), new BlockBreak(), new Chat(), new InteractBlock(), new BlackListCMD());
         registerStages();

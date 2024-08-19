@@ -32,7 +32,8 @@ public class Dungeon_MainCMD extends CMDBase {
         }
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("quit")) {
-                if (c instanceof Player p) {
+                if (c instanceof Player) {
+                    Player p = (Player) c;
                     if (StageManager.inDungeon(p)) {
                         StageManager.endDungeon(p, false, false);
                     }
@@ -40,13 +41,15 @@ public class Dungeon_MainCMD extends CMDBase {
             }
         } else if (args.length == 2) {
             if (args[0].equalsIgnoreCase("start")) {
-                if (c instanceof Player p) {
+                if (c instanceof Player) {
+                    Player p = (Player) c;
                     StageManager.startDungeon(p, args[1]);
                 }
             }
             if (args[0].equalsIgnoreCase("editor")) {
                 if (c.hasPermission("dungeons.admin")) {
-                    if (c instanceof Player p) {
+                    if (c instanceof Player) {
+                        Player p = (Player) c;
                         new MainEditor(p, args[1]).openInventory(p);
                     }
                 }

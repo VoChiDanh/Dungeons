@@ -26,13 +26,14 @@ public class MainStagesEditor extends BasicGUI {
                     Item stage = new Item.ItemBuilder(Material.PAPER)
                             .displayName(Chat.normalColorize("&bDungeon Stages " + (i + 1)))
                             .lore(config.contains("stages.stage_" + (i + 1))
-                                    ? Chat.normalColorize("&7Stage ID: " + config.getString("stages.stage_" + (i + 1) + ".id"))
-                                    : Chat.normalColorize("&7Stage ID: null")
-                            , Chat.normalColorize("&7Left Click to edit"), Chat.normalColorize("&7Right Click to delete"))
+                                            ? Chat.normalColorize("&7Stage ID: " + config.getString("stages.stage_" + (i + 1) + ".id"))
+                                            : Chat.normalColorize("&7Stage ID: null")
+                                    , Chat.normalColorize("&7Left Click to edit"), Chat.normalColorize("&7Right Click to delete"))
                             .build();
                     int o = i + 1;
                     setItem(new ItemSection(i, stage, "dungeon_stages_" + i, e -> {
-                        if (e.getWhoClicked() instanceof Player clicker) {
+                        if (e.getWhoClicked() instanceof Player) {
+                            Player clicker = (Player) e.getWhoClicked();
                             if (e.getClick().isLeftClick()) {
                                 clicker.closeInventory();
                                 if (config.contains("stages.stage_" + o)) {
@@ -61,7 +62,8 @@ public class MainStagesEditor extends BasicGUI {
                             .build();
                     int o = i + 1;
                     setItem(new ItemSection(i, stage, "dungeon_stages_" + i, e -> {
-                        if (e.getWhoClicked() instanceof Player clicker) {
+                        if (e.getWhoClicked() instanceof Player) {
+                            Player clicker = (Player) e.getWhoClicked();
                             clicker.closeInventory();
                             Editor.editorStagePath.put(clicker.getName() + "_" + dungeon, "stages.stage_" + o + ".");
                             Editor.editorStageType.put(clicker.getName() + "_" + dungeon, "create_new_stage");
@@ -73,13 +75,14 @@ public class MainStagesEditor extends BasicGUI {
                     }));
                 }
             }
-        } else{
+        } else {
             Item stage = new Item.ItemBuilder(Material.BOOK)
-                    .displayName(Chat.normalColorize("&bCreate Dungeon Stages " +  1))
+                    .displayName(Chat.normalColorize("&bCreate Dungeon Stages " + 1))
                     .lore(Chat.normalColorize("&7Left Click to create"))
                     .build();
             setItem(new ItemSection(0, stage, "dungeon_stages_" + 0, e -> {
-                if (e.getWhoClicked() instanceof Player clicker) {
+                if (e.getWhoClicked() instanceof Player) {
+                    Player clicker = (Player) e.getWhoClicked();
                     clicker.closeInventory();
                     Editor.editorStagePath.put(clicker.getName() + "_" + dungeon, "stages.stage_" + 1 + ".");
                     Editor.editorStageType.put(clicker.getName() + "_" + dungeon, "create_new_stage");

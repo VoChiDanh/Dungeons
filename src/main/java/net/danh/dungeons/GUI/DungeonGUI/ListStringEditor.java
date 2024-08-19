@@ -37,7 +37,8 @@ public class ListStringEditor extends BasicGUI {
                             .build();
                     int o = i;
                     setItem(new ItemSection(i, item, "path_" + i, e -> {
-                        if (e.getWhoClicked() instanceof Player clicker) {
+                        if (e.getWhoClicked() instanceof Player) {
+                            Player clicker = (Player) e.getWhoClicked();
                             if (e.getClick().isLeftClick()) {
                                 if (Editor.editorType.containsKey(clicker)) {
                                     Editor.editorType.replace(clicker, "chat");
@@ -94,7 +95,8 @@ public class ListStringEditor extends BasicGUI {
                             .lore(Chat.normalColorize(Chat.normalColorize("&7Left Click to create")))
                             .build();
                     setItem(new ItemSection(i, item, "path_" + i, e -> {
-                        if (e.getWhoClicked() instanceof Player clicker) {
+                        if (e.getWhoClicked() instanceof Player) {
+                            Player clicker = (Player) e.getWhoClicked();
                             if (e.getClick().isLeftClick()) {
                                 if (Editor.editorType.containsKey(clicker)) {
                                     Editor.editorType.replace(clicker, "chat");
@@ -135,7 +137,8 @@ public class ListStringEditor extends BasicGUI {
                     .lore(Chat.normalColorize(Chat.normalColorize("&7Left Click to create")))
                     .build();
             setItem(new ItemSection(0, item, "path_" + 0, e -> {
-                if (e.getWhoClicked() instanceof Player clicker) {
+                if (e.getWhoClicked() instanceof Player) {
+                    Player clicker = (Player) e.getWhoClicked();
                     if (e.getClick().isLeftClick()) {
                         if (Editor.editorType.containsKey(clicker)) {
                             Editor.editorType.replace(clicker, "chat");

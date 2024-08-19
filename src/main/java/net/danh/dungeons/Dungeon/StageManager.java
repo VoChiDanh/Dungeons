@@ -180,7 +180,7 @@ public class StageManager {
                     String itemID = reqSplit[2];
                     int amount = Integer.parseInt(reqSplit[3]);
                     for (ItemStack itemStack : p.getInventory().getContents()) {
-                        if (itemStack != null && !itemStack.isEmpty()) {
+                        if (itemStack != null) {
                             NBTItem nbtItem = NBTItem.get(itemStack);
                             if (nbtItem != null) {
                                 if (nbtItem.hasType() && nbtItem.getType().equalsIgnoreCase(itemType)) {

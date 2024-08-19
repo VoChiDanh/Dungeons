@@ -2,6 +2,7 @@ package net.danh.dungeons.Listeners;
 
 import net.danh.dungeons.Dungeon.DungeonManager;
 import net.danh.dungeons.Dungeon.StageManager;
+import net.danh.dungeons.Dungeons;
 import net.danh.dungeons.Resources.Number;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -44,6 +45,28 @@ public class VanillaMobs implements Listener {
                             if (amount <= kill.get(p.getName() + "_" + dungeonID)) {
                                 kill.remove(p.getName() + "_" + dungeonID);
                                 StageManager.nextStage(p);
+                            }
+                        }
+                    }
+                } else if (stageID.equalsIgnoreCase("mm_kill_mob")) {
+                    if (Dungeons.getMythicAPI().isMythicMob(e.getEntity())) {
+                        String type = dungeonManager.getConfig().getString("stages.stage_" + stageNumber + ".type");
+                        if (type != null && type.equalsIgnoreCase(Dungeons.getMythicAPI().getInternalName(e.getEntity()))) {
+                            int amount = Number.getInteger(dungeonManager.getConfig().getString("stages.stage_" + stageNumber + ".amount"));
+                            if (kill.containsKey(p.getName() + "_" + dungeonID)) {
+                                if (amount > kill.get(p.getName() + "_" + dungeonID)) {
+                                    kill.replace(p.getName() + "_" + dungeonID, kill.get(p.getName() + "_" + dungeonID) + 1);
+                                    if (amount <= kill.get(p.getName() + "_" + dungeonID)) {
+                                        kill.remove(p.getName() + "_" + dungeonID);
+                                        StageManager.nextStage(p);
+                                    }
+                                }
+                            } else {
+                                kill.put(p.getName() + "_" + dungeonID, 1);
+                                if (amount <= kill.get(p.getName() + "_" + dungeonID)) {
+                                    kill.remove(p.getName() + "_" + dungeonID);
+                                    StageManager.nextStage(p);
+                                }
                             }
                         }
                     }

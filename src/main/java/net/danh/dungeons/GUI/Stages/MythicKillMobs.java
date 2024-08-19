@@ -1,13 +1,10 @@
 package net.danh.dungeons.GUI.Stages;
 
-import io.lumine.mythic.api.exceptions.InvalidMobTypeException;
-import io.lumine.mythic.api.mobs.MythicMob;
-import io.lumine.mythic.bukkit.MythicBukkit;
 import net.danh.dungeons.API.DungeonsAPI;
 import net.danh.dungeons.Dungeons;
 import net.danh.dungeons.GUI.Editor;
 import net.danh.dungeons.GUI.Stages.Manager.StageBase;
-import net.danh.dungeons.Listeners.MythicMobs.MythicMobsKill;
+import net.danh.dungeons.Listeners.VanillaMobs;
 import net.danh.dungeons.Resources.Chat;
 import net.danh.dungeons.Resources.Files;
 import net.xconfig.bukkit.model.SimpleConfigurationManager;
@@ -78,12 +75,11 @@ public class MythicKillMobs extends StageBase {
                 FileConfiguration config = SimpleConfigurationManager.get().get("Dungeons/" + dungeonID + ".yml");
                 String mob_type = config.getString("stages.stage_" + stageNumber + ".type");
                 int amount = config.getInt("stages.stage_" + stageNumber + ".amount");
-                MythicMob mythicMob = MythicBukkit.inst().getAPIHelper().getMythicMob(mob_type);
-                if (mythicMob != null) {
+                if (Dungeons.getMythicAPI().getDisplayName(mob_type) != null) {
                     return Chat.normalColorize(Objects.requireNonNull(Files.getMessage().getString("dungeons.stage.kill_mob"))
-                            .replace("%killed%", String.valueOf(MythicMobsKill.kill_mythic.getOrDefault(p.getName() + "_" + dungeonID, 0)))
+                            .replace("%killed%", String.valueOf(VanillaMobs.kill.getOrDefault(p.getName() + "_" + dungeonID, 0)))
                             .replace("%amount%", String.valueOf(amount))
-                            .replace("%mob%", mythicMob.getDisplayName().get()));
+                            .replace("%mob%", Dungeons.getMythicAPI().getDisplayName(mob_type)));
                 }
             }
         }
@@ -110,13 +106,9 @@ public class MythicKillMobs extends StageBase {
                                 int y = Integer.parseInt(location.split(";")[1]);
                                 int z = Integer.parseInt(location.split(";")[2]);
                                 Location rLocation = new Location(world, x, y, z);
-                                if (MythicBukkit.inst().getAPIHelper().getMythicMob(type) != null) {
+                                if (Dungeons.getMythicAPI().getDisplayName(type) != null) {
                                     for (int i = 0; i < amount; i++) {
-                                        try {
-                                            MythicBukkit.inst().getAPIHelper().spawnMythicMob(type, rLocation);
-                                        } catch (InvalidMobTypeException e) {
-                                            throw new RuntimeException(e);
-                                        }
+                                        Dungeons.getMythicAPI().spawnMythicMob(type, rLocation);
                                     }
                                 }
                             }

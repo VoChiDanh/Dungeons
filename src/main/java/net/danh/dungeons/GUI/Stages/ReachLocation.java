@@ -30,6 +30,7 @@ public class ReachLocation extends StageBase {
             return "int";
         return "unknown";
     }
+
     @Override
     public @Nullable String getEditType(@NotNull String path) {
         if (path.equalsIgnoreCase("location"))

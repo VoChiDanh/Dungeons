@@ -9,12 +9,12 @@ location:
   complete: world;-9;113;-433
 requirements:
   info:
-  - '%player_level%;>=;2'
+    - '%player_level%;>=;2'
   info_lore:
-  - §bLevel higher than 2
+    - §bLevel higher than 2
 commands:
   complete:
-  - eco give %player_name% 5000
+    - eco give %player_name% 5000
 stages:
   stage_1:
     id: reach_location

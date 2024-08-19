@@ -11,6 +11,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -174,7 +175,7 @@ public class Editor {
                     list.add(edit);
                     config.set(path, list);
                 } else {
-                    config.set(path, List.of(edit));
+                    config.set(path, Collections.singletonList(edit));
                 }
             }
         } else if (editorType.get(p).equalsIgnoreCase("break_block")) {

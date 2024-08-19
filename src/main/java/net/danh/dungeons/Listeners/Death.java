@@ -18,7 +18,7 @@ public class Death implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onDeath(@NotNull PlayerDeathEvent e) {
-        Player p = e.getPlayer();
+        Player p = e.getEntity();
         if (StageManager.inDungeon(p))
             Bukkit.getScheduler().scheduleSyncDelayedTask(Dungeons.getDungeonCore(), () -> p.spigot().respawn(), 0);
     }

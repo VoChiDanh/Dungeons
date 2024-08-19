@@ -18,7 +18,8 @@ public class BlockBreak implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onBreak(@NotNull EntityChangeBlockEvent e) {
-        if (e.getEntity() instanceof Player p) {
+        if (e.getEntity() instanceof Player) {
+            Player p = (Player) e.getEntity();
             if (StageManager.inDungeon(p))
                 e.setCancelled(true);
         } else {
