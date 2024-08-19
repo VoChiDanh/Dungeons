@@ -25,9 +25,9 @@ public class Files {
     public static void updateFiles() {
         int configVersion = getConfigVersion();
         int messageVersion = getMessageVersion();
-        if (configVersion < 1)
+        if (configVersion < 2)
             Dungeons.getDungeonCore().getLogger().warning("Your config file is outdated");
-        if (messageVersion < 1)
+        if (messageVersion < 2)
             Dungeons.getDungeonCore().getLogger().warning("Your message file is outdated");
     }
 

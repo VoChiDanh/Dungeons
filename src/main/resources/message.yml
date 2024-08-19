@@ -1,7 +1,7 @@
-version: 1
+version: 2
 
 admin:
-  reload_files: "<aqua>Reloaded Files!"
+  reload_files: "&bReloaded Files!"
 
 dungeons:
   stage:
@@ -14,7 +14,7 @@ dungeons:
     end: "&eDungeon will end in <second>s"
 
 user:
-  start_dungeon: "<aqua>Starting dungeon <name>"
-  end_dungeon: "<aqua>Done dungeon <name>"
-  check_requirements: "<red>You don't meet requirements"
-  dungeon_error: "<red>Dungeon has error so you can't join - Contact owner if you think that's error"
+  start_dungeon: "&bStarting dungeon <name>"
+  end_dungeon: "&bDone dungeon <name>"
+  check_requirements: "&cYou don't meet requirements"
+  dungeon_error: "&cDungeon has error so you can't join - Contact owner if you think that's error"

@@ -1,9 +1,9 @@
-version: 1
+version: 2
 check_update: true
 
 settings:
   debug: false
-  prefix: "<white>[ <aqua>Dungeons</aqua> ]"
+  prefix: "&f[ &bDungeons&f ]"
 
 dungeon:
   black_list_command:

@@ -6,6 +6,8 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,10 +17,13 @@ import java.util.stream.Collectors;
 
 public class Chat {
 
-
     @Contract("_ -> new")
     public static @NotNull String normalColorize(String string) {
         return ChatColor.translateAlternateColorCodes('&', replaceColorSymbol(string));
+    }
+    @Contract("_ -> new")
+    public static @NotNull String normalColorizewp(String string) {
+        return ChatColor.translateAlternateColorCodes('&', replaceColorSymbol(Files.getConfig().getString("settings.prefix") + " " + string));
     }
 
     @Contract("_ -> new")
@@ -29,47 +34,6 @@ public class Chat {
     public static void debug(String message) {
         if (Files.getConfig().getBoolean("settings.debug")) Dungeons.getDungeonCore().getLogger().warning(message);
     }
-
-    public static @NotNull Component colorize(String message) {
-        return MiniMessage.miniMessage().deserialize(
-                LegacyComponentSerializer.legacyAmpersand().serialize(
-                        LegacyComponentSerializer.legacySection().deserialize(
-                                LegacyComponentSerializer.legacyAmpersand().serialize(
-                                        LegacyComponentSerializer.legacyAmpersand().deserialize(
-                                                replaceColorCode(message)
-                                        )
-                                )
-                        )
-                )
-        );
-    }
-
-    public static List<Component> colorize(String... message) {
-        return Arrays.stream(message).map(Chat::colorize).collect(Collectors.toList());
-    }
-
-    public static List<Component> colorize(@NotNull List<String> message) {
-        return message.stream().map(Chat::colorize).collect(Collectors.toList());
-    }
-
-    public static @NotNull Component colorizewp(String message) {
-        return MiniMessage.miniMessage().deserialize(
-                LegacyComponentSerializer.legacyAmpersand().serialize(
-                        LegacyComponentSerializer.legacySection().deserialize(
-                                LegacyComponentSerializer.legacyAmpersand().serialize(
-                                        LegacyComponentSerializer.legacyAmpersand().deserialize(
-                                                replaceColorCode(Files.getConfig().getString("settings.prefix") + " " + message)
-                                        )
-                                )
-                        )
-                )
-        );
-    }
-
-    public static List<Component> colorizewp(String... message) {
-        return Arrays.stream(message).map(Chat::colorizewp).collect(Collectors.toList());
-    }
-
     @NotNull
     public static String replaceColorCode(String message) {
         message = message.replace("§", "&");
@@ -160,9 +124,6 @@ public class Chat {
         return message;
     }
 
-    public static List<Component> colorizewp(@NotNull List<String> message) {
-        return message.stream().map(Chat::colorizewp).collect(Collectors.toList());
-    }
 
     public static @NotNull String caseOnWords(@NotNull String input) {
         StringBuilder builder = new StringBuilder(input.replace("_", " ")
@@ -182,11 +143,11 @@ public class Chat {
         return builder.toString();
     }
 
-    public static void sendMessage(@NotNull Audience sender, String message) {
-        sender.sendMessage(colorizewp(message));
+    public static void sendMessage(@NotNull CommandSender sender, String message) {
+        sender.sendMessage(normalColorizewp(message));
     }
 
-    public static void sendMessage(Audience sender, @NotNull List<String> messages) {
+    public static void sendMessage(CommandSender sender, @NotNull List<String> messages) {
         messages.forEach(message -> sendMessage(sender, message));
     }
 }
