@@ -37,4 +37,7 @@ jobs:
             
             [SpigotMC](https://www.spigotmc.org/resources/118953/)
             [Hangar](https://hangar.papermc.io/VoChiDanh/Dungeons)
+            [Dungeon Editor Tutorial](https://youtu.be/fOpgUL5dkdo)
+            [Dungeon Showcase](https://youtu.be/kUcsXGrBRVs)
+            [Example Dungeon Files](https://github.com/VoChiDanh/Dungeons/tree/master/ExampleDungeon)
           filename: "./target/Dungeons.jar"
