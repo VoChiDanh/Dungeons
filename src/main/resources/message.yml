@@ -1,12 +1,16 @@
-version: 2
+version: 3
 
 admin:
   reload_files: "&bReloaded Files!"
+  help:
+    - "&a/dungeons editor <dungeon-id>"
+    - "&a/dungeons reload"
 
 dungeons:
   stage:
     reach_location: "&bReach location %x% %y% %z% - %distance% Blocks"
     kill_mob: "&bKill %killed%/%amount% %mob%"
+    break_wall: "&bBreak wall at %block% %x% %y% %z% - %distance% Blocks"
   times:
     start_soon: "&6Dungeon will begin soon"
     start: "&eDungeon will start in <second>s"
@@ -18,3 +22,6 @@ user:
   end_dungeon: "&bDone dungeon <name>"
   check_requirements: "&cYou don't meet requirements"
   dungeon_error: "&cDungeon has error so you can't join - Contact owner if you think that's error"
+  help:
+    - "&a/dungeons start <dungeon-id>"
+    - "&a/dungeons quit"
