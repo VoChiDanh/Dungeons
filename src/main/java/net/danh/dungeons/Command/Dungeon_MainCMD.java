@@ -31,7 +31,11 @@ public class Dungeon_MainCMD extends CMDBase {
             }
         }
         if (args.length == 1) {
-            if (args[0].equalsIgnoreCase("quit")) {
+            if (args[0].equalsIgnoreCase("help")) {
+                Chat.sendMessage(c, Files.getMessage().getStringList("user.help"));
+                if (c.hasPermission("dungeons.admin"))
+                    Chat.sendMessage(c, Files.getMessage().getStringList("admin.help"));
+            } else if (args[0].equalsIgnoreCase("quit")) {
                 if (c instanceof Player) {
                     Player p = (Player) c;
                     if (StageManager.inDungeon(p)) {
@@ -45,8 +49,7 @@ public class Dungeon_MainCMD extends CMDBase {
                     Player p = (Player) c;
                     StageManager.startDungeon(p, args[1]);
                 }
-            }
-            if (args[0].equalsIgnoreCase("editor")) {
+            } else if (args[0].equalsIgnoreCase("editor")) {
                 if (c.hasPermission("dungeons.admin")) {
                     if (c instanceof Player) {
                         Player p = (Player) c;
@@ -66,6 +69,7 @@ public class Dungeon_MainCMD extends CMDBase {
                 commands.add("reload");
                 commands.add("editor");
             }
+            commands.add("help");
             commands.add("start");
             commands.add("quit");
             StringUtil.copyPartialMatches(args[0], commands, completions);
