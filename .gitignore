@@ -4,7 +4,6 @@
 # Compiled class file
 *.class
 # Package Files #
-*.jar
 *.war
 *.nar
 *.ear
