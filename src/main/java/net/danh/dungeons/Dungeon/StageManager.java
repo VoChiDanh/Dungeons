@@ -284,7 +284,8 @@ public class StageManager {
             String worldName = config.getString("world");
             if (worldName != null) {
                 File srcDir = new File(Dungeons.getDungeonCore().getDataFolder(), "Worlds/" + worldName);
-                if (srcDir.exists()) {
+                File srcNormalDir = new File(Bukkit.getServer().getWorldContainer(), worldName);
+                if (srcDir.exists() || srcNormalDir.exists()) {
                     if (config.contains("name") && config.getString("name") != null) {
                         if (!status.containsKey(p) || (status.containsKey(p) && status.get(p).equals(DungeonStatus.NONE))) {
                             if (StageManager.checkRequirements(p, dungeonID)) {
