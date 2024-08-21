@@ -1,5 +1,6 @@
 package net.danh.dungeons.Listeners;
 
+import net.danh.dungeons.Dungeon.StageManager;
 import net.danh.dungeons.Resources.Files;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,8 +15,10 @@ public class BlackListCMD implements Listener {
         Player p = e.getPlayer();
         String[] args = e.getMessage().replace("/", "").split(" ");
         if (Files.getConfig().getStringList("dungeon.black_list_command").contains(args[0])) {
-            if (!p.hasPermission("dungeons.admin"))
-                e.setCancelled(true);
+            if (StageManager.inDungeon(p)) {
+                if (!p.hasPermission("dungeons.admin"))
+                    e.setCancelled(true);
+            }
         }
     }
 }
