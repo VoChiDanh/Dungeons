@@ -195,6 +195,22 @@ public class StageManager {
                         }
                     }
                 }
+            } else if (itemPlugin.equalsIgnoreCase("VANILLA")) {
+                String itemType = reqSplit[1];
+                int amount = Integer.parseInt(reqSplit[2]);
+                for (ItemStack itemStack : p.getInventory().getContents()) {
+                    if (itemStack != null) {
+                        if (itemStack.getType() != Material.AIR) {
+                            if (itemStack.getType().toString().equals(itemType)
+                                    && !itemStack.hasItemMeta()) {
+                                if (getPlayerAmount(p, itemStack) >= amount) {
+                                    removeItems(p, itemStack, amount);
+                                    amountCheck++;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
         return amountCheck;
