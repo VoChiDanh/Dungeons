@@ -41,8 +41,11 @@ public class StageManager {
     public static void copy(String backup, String target) {
         File srcDir = new File(Dungeons.getDungeonCore().getDataFolder(), "Worlds/" + backup);
         if (!srcDir.exists()) {
-            Dungeons.getDungeonCore().getLogger().warning("World does not exist!");
-            return;
+            srcDir = new File(Bukkit.getServer().getWorldContainer(), backup);
+            if (!srcDir.exists()) {
+                Dungeons.getDungeonCore().getLogger().warning("World does not exist!");
+                return;
+            }
         }
         File destDir = new File(Bukkit.getServer().getWorldContainer(), target);
         try {
