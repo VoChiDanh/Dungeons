@@ -18,14 +18,16 @@ import java.util.Objects;
 public class BreakWalls extends StageBase {
     public BreakWalls() {
         super("break_wall"
-                , "location;distance", null);
+                , "location;depth;width", null);
     }
 
     @Override
     public @NotNull String getValueData(@NotNull String path) {
         if (path.equalsIgnoreCase("location"))
             return "string";
-        else if (path.equalsIgnoreCase("distance"))
+        else if (path.equalsIgnoreCase("depth"))
+            return "int";
+        else if (path.equalsIgnoreCase("width"))
             return "int";
         return "unknown";
     }
@@ -34,7 +36,9 @@ public class BreakWalls extends StageBase {
     public @Nullable String getEditType(@NotNull String data) {
         if (data.equalsIgnoreCase("location"))
             return "break_block";
-        else if (data.equalsIgnoreCase("distance"))
+        else if (data.equalsIgnoreCase("depth"))
+            return "chat_int";
+        else if (data.equalsIgnoreCase("width"))
             return "chat_int";
         return null;
     }
@@ -43,8 +47,10 @@ public class BreakWalls extends StageBase {
     public @Nullable String getSuggestEdit(@NotNull String path) {
         if (path.equalsIgnoreCase("location"))
             return Chat.normalColorize("&6Break block at location you want:");
-        else if (path.equalsIgnoreCase("distance"))
-            return Chat.normalColorize("&6Distance of wall");
+        else if (path.equalsIgnoreCase("depth"))
+            return Chat.normalColorize("&6Depth of wall");
+        else if (path.equalsIgnoreCase("width"))
+            return Chat.normalColorize("&6Width of wall");
         return null;
     }
 

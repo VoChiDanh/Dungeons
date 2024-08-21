@@ -35,17 +35,20 @@ public class BlockBreak implements Listener {
                     if (location != null) {
                         World world = Bukkit.getWorld(Objects.requireNonNull(dungeonManager.getConfig().getString("world")) + "_" + p.getName() + "_" + dungeonID);
                         if (world != null) {
-                            int distance = dungeonManager.getConfig().getInt("stages.stage_" + stageNumber + ".distance");
+                            int width = dungeonManager.getConfig().getInt("stages.stage_" + stageNumber + ".width");
+                            int depth = dungeonManager.getConfig().getInt("stages.stage_" + stageNumber + ".depth");
                             int x = Integer.parseInt(location.split(";")[0]);
                             int y = Integer.parseInt(location.split(";")[1]);
                             int z = Integer.parseInt(location.split(";")[2]);
                             Location breakLocation = new Location(world, x, y, z);
-                            if (e.getBlock().getLocation().equals(breakLocation)) {
-                                BreakDirection direction = BreakDirection.getFacingDirection(p);
-                                List<Location> blocks = direction.getRadius(e.getBlock(), distance, distance);
-                                for (Location b_lo : blocks)
-                                    b_lo.getBlock().setType(Material.AIR);
-                                StageManager.nextStage(p);
+                            if (e.getBlock().getLocation().distanceSquared(breakLocation) <= 3) {
+                                if (breakLocation.getBlock().getType().equals(e.getBlock().getType())) {
+                                    BreakDirection direction = BreakDirection.getFacingDirection(p);
+                                    List<Location> blocks = direction.getRadius(e.getBlock(), depth, width);
+                                    for (Location b_lo : blocks)
+                                        b_lo.getBlock().setType(Material.AIR);
+                                    StageManager.nextStage(p);
+                                }
                             }
                         }
                     }
