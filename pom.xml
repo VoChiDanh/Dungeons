@@ -119,6 +119,13 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+			<groupId>com.github.emanondev</groupId>
+			<artifactId>ItemEdit</artifactId>
+			<version>3.5.2</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/libs/ItemEdit-3.5.2.jar</systemPath>
+		</dependency>
+		<dependency>
 			<groupId>com.tchristofferson</groupId>
 			<artifactId>ConfigUpdater</artifactId>
 			<version>2.1-SNAPSHOT</version>

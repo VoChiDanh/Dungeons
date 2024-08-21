@@ -120,24 +120,43 @@ public class Chat {
         return message;
     }
 
-
     public static @NotNull String caseOnWords(@NotNull String input) {
-        StringBuilder builder = new StringBuilder(input.replace("_", " ")
-                .replace("-", " "));
-        boolean isLastSpace = true;
+        String[] words = input.replace("_", " ").replace("-", " ").split("\\s+");
+        StringBuilder builder = new StringBuilder();
 
-        for (int i = 0; i < builder.length(); ++i) {
-            char ch = builder.charAt(i);
-            if (isLastSpace && ch >= 'a' && ch <= 'z') {
-                builder.setCharAt(i, (char) (ch + -32));
-                isLastSpace = false;
+        for (int i = 0; i < words.length; i++) {
+            String word = words[i];
+
+            if (i == 0) {
+                builder.append(capitalizeWord(word));
             } else {
-                isLastSpace = ch == ' ';
+                builder.append(capitalizeIfUppercase(word));
+            }
+
+            if (i < words.length - 1) {
+                builder.append(" ");
             }
         }
 
         return builder.toString();
     }
+
+    private static @NotNull String capitalizeWord(@NotNull String word) {
+        if (word.isEmpty()) {
+            return word;
+        }
+        return Character.toUpperCase(word.charAt(0)) + word.substring(1).toLowerCase();
+    }
+
+    private static String capitalizeIfUppercase(@NotNull String word) {
+        if (word.isEmpty()) {
+            return word;
+        }
+        return word.equals(word.toUpperCase())
+                ? capitalizeWord(word)
+                : word.toLowerCase();
+    }
+
 
     public static void sendMessage(@NotNull CommandSender sender, String message) {
         sender.sendMessage(normalColorizewp(message));

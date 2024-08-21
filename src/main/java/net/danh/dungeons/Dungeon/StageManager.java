@@ -1,5 +1,7 @@
 package net.danh.dungeons.Dungeon;
 
+import emanondev.itemedit.ItemEdit;
+import emanondev.itemedit.storage.ServerStorage;
 import io.lumine.mythic.lib.api.item.NBTItem;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.danh.dungeons.API.DungeonsAPI;
@@ -206,6 +208,25 @@ public class StageManager {
                                 if (getPlayerAmount(p, itemStack) >= amount) {
                                     removeItems(p, itemStack, amount);
                                     amountCheck++;
+                                }
+                            }
+                        }
+                    }
+                }
+            } else if (itemPlugin.equalsIgnoreCase("ITEMEDIT")) {
+                String itemType = reqSplit[1];
+                int amount = Integer.parseInt(reqSplit[2]);
+                ServerStorage serverStorage = ItemEdit.get().getServerStorage();
+                ItemStack item = serverStorage.getItem(itemType, p);
+                if (item != null) {
+                    for (ItemStack itemStack : p.getInventory().getContents()) {
+                        if (itemStack != null) {
+                            if (serverStorage.getId(itemStack) != null) {
+                                if (serverStorage.getId(itemStack).equalsIgnoreCase(itemType)) {
+                                    if (getPlayerAmount(p, itemStack) >= amount) {
+                                        removeItems(p, itemStack, amount);
+                                        amountCheck++;
+                                    }
                                 }
                             }
                         }

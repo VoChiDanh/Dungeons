@@ -1,10 +1,7 @@
 package net.danh.dungeons.GUI.Stages.Manager;
 
 import net.danh.dungeons.Dungeons;
-import net.danh.dungeons.GUI.Stages.BreakWalls;
-import net.danh.dungeons.GUI.Stages.MythicKillMobs;
-import net.danh.dungeons.GUI.Stages.ReachLocation;
-import net.danh.dungeons.GUI.Stages.VanillaKillMobs;
+import net.danh.dungeons.GUI.Stages.*;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,6 +15,7 @@ public class StageRegistry {
         stage.add(ReachLocation.class);
         stage.add(VanillaKillMobs.class);
         stage.add(BreakWalls.class);
+        stage.add(ShootBlock.class);
         if (Dungeons.isIsMythicMobsInstalled())
             stage.add(MythicKillMobs.class);
     }

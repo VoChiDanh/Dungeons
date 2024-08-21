@@ -11,6 +11,7 @@ dungeons:
     reach_location: "&bReach location %x% %y% %z% - %distance% Blocks"
     kill_mob: "&bKill %killed%/%amount% %mob%"
     break_wall: "&bBreak wall at %block% %x% %y% %z% - %distance% Blocks"
+    shoot_block: "&bShoot %shot%/%amount% time(s) block at %block% %x% %y% %z%"
   times:
     start_soon: "&6Dungeon will begin soon"
     start: "&eDungeon will start in <second>s"

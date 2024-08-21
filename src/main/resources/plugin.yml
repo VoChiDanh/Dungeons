@@ -8,6 +8,7 @@ depend:
 softdepend:
   - MythicMobs
   - MMOItems
+  - ItemEdit
 commands:
   Dungeons:
     description: Main Commands

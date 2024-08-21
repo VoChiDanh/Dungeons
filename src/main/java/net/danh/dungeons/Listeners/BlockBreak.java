@@ -12,14 +12,67 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
 public class BlockBreak implements Listener {
+
+    public static HashMap<String, Integer> block_data = new HashMap<>();
+
+    @EventHandler(ignoreCancelled = true)
+    public void onShoot(@NotNull ProjectileHitEvent e) {
+        if (e.getEntity().getShooter() instanceof Player) {
+            Player p = (Player) e.getEntity().getShooter();
+            if (StageManager.inDungeon(p)) {
+                String dungeonID = StageManager.getPlayerDungeon(p);
+                DungeonManager dungeonManager = new DungeonManager(dungeonID);
+                int stageNumber = StageManager.getStageNumber(p);
+                String stageID = dungeonManager.getConfig().getString("stages.stage_" + stageNumber + ".id");
+                if (stageID != null) {
+                    if (stageID.equalsIgnoreCase("shoot_block")) {
+                        String location = dungeonManager.getConfig().getString("stages.stage_" + stageNumber + ".location");
+                        if (location != null) {
+                            World world = Bukkit.getWorld(Objects.requireNonNull(dungeonManager.getConfig().getString("world")) + "_" + p.getName() + "_" + dungeonID);
+                            if (world != null) {
+                                int distance = dungeonManager.getConfig().getInt("stages.stage_" + stageNumber + ".distance");
+                                int amount = dungeonManager.getConfig().getInt("stages.stage_" + stageNumber + ".amount");
+                                int x = Integer.parseInt(location.split(";")[0]);
+                                int y = Integer.parseInt(location.split(";")[1]);
+                                int z = Integer.parseInt(location.split(";")[2]);
+                                Location shootLocation = new Location(world, x, y, z);
+                                Block block = e.getHitBlock();
+                                if (block != null) {
+                                    if (block.getLocation().distanceSquared(shootLocation) <= distance) {
+                                        if (block_data.containsKey(p.getName() + "_" + dungeonID)) {
+                                            if (amount > block_data.get(p.getName() + "_" + dungeonID)) {
+                                                block_data.replace(p.getName() + "_" + dungeonID, block_data.get(p.getName() + "_" + dungeonID) + 1);
+                                                if (amount <= block_data.get(p.getName() + "_" + dungeonID)) {
+                                                    block_data.remove(p.getName() + "_" + dungeonID);
+                                                    StageManager.nextStage(p);
+                                                }
+                                            }
+                                        } else {
+                                            block_data.put(p.getName() + "_" + dungeonID, 1);
+                                            if (amount <= block_data.get(p.getName() + "_" + dungeonID)) {
+                                                block_data.remove(p.getName() + "_" + dungeonID);
+                                                StageManager.nextStage(p);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     @EventHandler(ignoreCancelled = true)
     public void onBreak(@NotNull BlockBreakEvent e) {
