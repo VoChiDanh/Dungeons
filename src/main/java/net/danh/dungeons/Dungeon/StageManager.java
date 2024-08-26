@@ -118,6 +118,7 @@ public class StageManager {
                 if (!getMeetItemsRequirement(p, requirementsItem)) {
                     Chat.sendMessage(p, Files.getMessage().getString("user.check_requirements"));
                     Chat.sendMessage(p, config.getStringList("requirements.item_lore"));
+                    return false;
                 } else
                     return getMeetItemsRequirement(p, requirementsItem);
             }
@@ -126,8 +127,9 @@ public class StageManager {
                 if (!(meetRequirements == requirementsInfo.size())) {
                     Chat.sendMessage(p, Files.getMessage().getString("user.check_requirements"));
                     Chat.sendMessage(p, config.getStringList("requirements.info_lore"));
+                    return false;
                 }
-                return (meetRequirements == requirementsInfo.size());
+                return true;
             }
             return true;
         }
