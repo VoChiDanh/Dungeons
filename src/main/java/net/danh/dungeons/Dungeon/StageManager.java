@@ -402,7 +402,8 @@ public class StageManager {
                                 () -> {
                                     p.removePotionEffect(PotionEffectType.BLINDNESS);
                                     p.setGameMode(gamemode.get(p));
-                                    p.teleport(rLocation);
+                                    for (Player player : p.getWorld().getPlayers())
+                                        player.teleport(rLocation);
                                     delete(config.getString("world") + "_" + p.getName() + "_" + dungeonID);
                                     if (isComplete) {
                                         List<String> commands = config.getStringList("commands.complete");
