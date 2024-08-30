@@ -1,10 +1,29 @@
-version: 3
+version: 4
 
 admin:
   reload_files: "&bReloaded Files!"
   help:
     - "&a/dungeons editor <dungeon-id>"
     - "&a/dungeons reload"
+
+party:
+  create: "&bParty <name>&b has been created"
+  disband: "&cParty <name>&c has been dissolved"
+  rename: "&eParty <name>&e was renamed to <new_name>"
+  kick: "&cYou was kicked from party <name>"
+  party_join: "&b<player>&b join your party"
+  player_join: "&bYou join party <name>"
+  already_has_name: "&cAlready has party name <name>"
+  not_in_party: "&cYou must be in party to do this command!"
+  not_leader: "&cYou are not leader to do this command!"
+  cant_kick_leader: "&cYou can not kick your leader"
+  already_in_party: "&cPlayer <name>&c already in another party"
+  help:
+    - "&a/dungeons party create <id> - Create Party with ID"
+    - "&a/dungeons party rename <name> - Rename Party Display"
+    - "&a/dungeons party invite <player> - Invite Player"
+    - "&a/dungeons party kick <player> - Kick Player"
+    - "&a/dungeons party disband - Kick Player"
 
 dungeons:
   stage:

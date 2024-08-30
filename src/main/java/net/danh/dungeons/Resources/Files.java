@@ -104,12 +104,18 @@ public class Files {
             List<String> default_user_help = defaultConfig.getStringList("user.help");
             List<String> current_admin_help = currentConfig.getStringList("admin.help");
             List<String> current_user_help = currentConfig.getStringList("user.help");
-            if (default_admin_help.size() != current_admin_help.size()) {
+            List<String> default_party_help = defaultConfig.getStringList("party.help");
+            List<String> current_party_help = currentConfig.getStringList("party.help");
+            if (current_admin_help.isEmpty()) {
                 getConfig().set("admin.help", default_admin_help);
                 SimpleConfigurationManager.get().save("message.yml");
             }
-            if (default_user_help.size() != current_user_help.size()) {
+            if (current_user_help.isEmpty()) {
                 getConfig().set("user.help", default_user_help);
+                SimpleConfigurationManager.get().save("message.yml");
+            }
+            if (current_party_help.isEmpty()) {
+                getConfig().set("party.help", default_party_help);
                 SimpleConfigurationManager.get().save("message.yml");
             }
             try {

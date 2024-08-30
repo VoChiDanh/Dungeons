@@ -63,7 +63,7 @@ public class ListStringEditor extends BasicGUI {
                                     Chat.sendMessage(clicker, "&b    <amount> mean number");
                                     Chat.sendMessage(clicker, "&b    Example: MMOITEMS;MATERIAL;DUNGEON_TICKET;1");
                                     Chat.sendMessage(clicker, "&b    Example: VANILLA;DIAMOND;1");
-                                    Chat.sendMessage(clicker,  "&b    Example: ITEMEDIT;ITEM_ID;1");
+                                    Chat.sendMessage(clicker, "&b    Example: ITEMEDIT;ITEM_ID;1");
                                 } else if (path.equalsIgnoreCase("requirements.info_lore")) {
                                     Chat.sendMessage(clicker, "&bCustom display for requirements info");
                                 } else if (path.equalsIgnoreCase("requirements.item_lore")) {
@@ -120,7 +120,7 @@ public class ListStringEditor extends BasicGUI {
                                     Chat.sendMessage(clicker, "&b    <amount> mean number");
                                     Chat.sendMessage(clicker, "&b    Example: MMOITEMS;MATERIAL;DUNGEON_TICKET;1");
                                     Chat.sendMessage(clicker, "&b    Example: VANILLA;DIAMOND;1");
-                                    Chat.sendMessage(clicker,  "&b    Example: ITEMEDIT;ITEM_ID;1");
+                                    Chat.sendMessage(clicker, "&b    Example: ITEMEDIT;ITEM_ID;1");
                                 } else if (path.equalsIgnoreCase("requirements.info_lore")) {
                                     Chat.sendMessage(clicker, "&bCustom display for requirements info");
                                 } else if (path.equalsIgnoreCase("requirements.item_lore")) {
@@ -164,7 +164,7 @@ public class ListStringEditor extends BasicGUI {
                             Chat.sendMessage(clicker, "&b    <amount> mean number");
                             Chat.sendMessage(clicker, "&b    Example: MMOITEMS;MATERIAL;DUNGEON_TICKET;1");
                             Chat.sendMessage(clicker, "&b    Example: VANILLA;DIAMOND;1");
-                            Chat.sendMessage(clicker,  "&b    Example: ITEMEDIT;ITEM_ID;1");
+                            Chat.sendMessage(clicker, "&b    Example: ITEMEDIT;ITEM_ID;1");
                         } else if (path.equalsIgnoreCase("requirements.info_lore")) {
                             Chat.sendMessage(clicker, "&bCustom display for requirements info");
                         } else if (path.equalsIgnoreCase("requirements.item_lore")) {

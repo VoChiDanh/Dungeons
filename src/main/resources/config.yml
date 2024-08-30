@@ -1,9 +1,12 @@
-version: 2
+version: 3
 check_update: true
 
 settings:
   debug: false
   prefix: "&f[ &bDungeons&f ]"
+
+party:
+  default_display: "&7[ &a<name> &7]"
 
 dungeon:
   black_list_command:
