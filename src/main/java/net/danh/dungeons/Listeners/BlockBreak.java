@@ -43,10 +43,7 @@ public class BlockBreak implements Listener {
                             if (world != null) {
                                 int distance = dungeonManager.getConfig().getInt("stages.stage_" + stageNumber + ".distance");
                                 int amount = dungeonManager.getConfig().getInt("stages.stage_" + stageNumber + ".amount");
-                                int x = Integer.parseInt(location.split(";")[0]);
-                                int y = Integer.parseInt(location.split(";")[1]);
-                                int z = Integer.parseInt(location.split(";")[2]);
-                                Location shootLocation = new Location(world, x, y, z);
+                                Location shootLocation = StageManager.getLocation(location, world);
                                 Block block = e.getHitBlock();
                                 if (block != null) {
                                     if (block.getLocation().distanceSquared(shootLocation) <= distance) {
@@ -99,10 +96,7 @@ public class BlockBreak implements Listener {
                         if (world != null) {
                             int width = dungeonManager.getConfig().getInt("stages.stage_" + stageNumber + ".width");
                             int depth = dungeonManager.getConfig().getInt("stages.stage_" + stageNumber + ".depth");
-                            int x = Integer.parseInt(location.split(";")[0]);
-                            int y = Integer.parseInt(location.split(";")[1]);
-                            int z = Integer.parseInt(location.split(";")[2]);
-                            Location breakLocation = new Location(world, x, y, z);
+                            Location breakLocation = StageManager.getLocation(location, world);
                             if (e.getBlock().getLocation().distanceSquared(breakLocation) <= 3) {
                                 if (breakLocation.getBlock().getType().equals(e.getBlock().getType())) {
                                     BreakDirection direction = BreakDirection.getFacingDirection(p);

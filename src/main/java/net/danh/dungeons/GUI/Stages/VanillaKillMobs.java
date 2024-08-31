@@ -1,6 +1,7 @@
 package net.danh.dungeons.GUI.Stages;
 
 import net.danh.dungeons.API.DungeonsAPI;
+import net.danh.dungeons.Dungeon.StageManager;
 import net.danh.dungeons.GUI.Editor;
 import net.danh.dungeons.GUI.Stages.Manager.StageBase;
 import net.danh.dungeons.Listeners.VanillaMobs;
@@ -99,10 +100,7 @@ public class VanillaKillMobs extends StageBase {
                     if (location != null) {
                         World world = Bukkit.getWorld(Objects.requireNonNull(config.getString("world")) + "_" + p.getName() + "_" + dungeonID);
                         if (world != null) {
-                            int x = Integer.parseInt(location.split(";")[0]);
-                            int y = Integer.parseInt(location.split(";")[1]);
-                            int z = Integer.parseInt(location.split(";")[2]);
-                            Location rLocation = new Location(world, x, y, z);
+                            Location rLocation = StageManager.getLocation(location, world);
                             EntityType entityType = EntityType.valueOf(type);
                             for (int i = 0; i < amount; i++) {
                                 world.spawnEntity(rLocation, entityType);

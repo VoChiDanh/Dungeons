@@ -3,7 +3,6 @@ package net.danh.dungeons.Listeners;
 import net.danh.dungeons.Dungeon.DungeonManager;
 import net.danh.dungeons.Dungeon.StageManager;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -29,12 +28,9 @@ public class ReachLocation implements Listener {
                     if (location != null) {
                         World world = Bukkit.getWorld(Objects.requireNonNull(dungeonManager.getConfig().getString("world")) + "_" + p.getName() + "_" + dungeonID);
                         if (world != null) {
-                            int x = Integer.parseInt(location.split(";")[0]);
-                            int y = Integer.parseInt(location.split(";")[1]);
-                            int z = Integer.parseInt(location.split(";")[2]);
-                            if (p.getWorld().equals(world) && e.getTo().distance(new Location(world, x, y, z))
+                            if (p.getWorld().equals(world) && e.getTo().distance(StageManager.getLocation(location, world))
                                     <= Integer.parseInt(Objects.requireNonNull(dungeonManager.getConfig().getString("stages.stage_" + stageNumber + ".distance")))) {
-                                StageManager.checkPoints.replace(p.getName() + "_" + dungeonID, new Location(world, x, y, z));
+                                StageManager.checkPoints.replace(p.getName() + "_" + dungeonID, StageManager.getLocation(location, world));
                                 StageManager.nextStage(p);
                             }
                         }

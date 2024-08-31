@@ -19,21 +19,24 @@ public class InteractBlock implements Listener {
             if (Editor.editorDungeonInfo.containsKey(p.getName() + "_" + dungeon)) {
                 if (Editor.editorDungeonInfo.get(p.getName() + "_" + dungeon).equalsIgnoreCase("dungeon_start_location")) {
                     if (Editor.editorDungeonByBreak.containsKey(p.getName() + "_" + dungeon)) {
-                        Editor.editorDungeonByBreak.replace(p.getName() + "_" + dungeon, e.getBlock().getLocation().getBlockX()
-                                + ";" + e.getBlock().getLocation().getBlockY() + ";" + e.getBlock().getLocation().getBlockZ());
+                        Editor.editorDungeonByBreak.replace(p.getName() + "_" + dungeon, e.getBlock().getLocation().getX()
+                                + ";" + e.getBlock().getLocation().getY() + ";" + e.getBlock().getLocation().getZ() + ";"
+                                + e.getBlock().getLocation().getYaw() + ";" + e.getBlock().getLocation().getPitch());
                     } else
-                        Editor.editorDungeonByBreak.put(p.getName() + "_" + dungeon, e.getBlock().getLocation().getBlockX()
-                                + ";" + e.getBlock().getLocation().getBlockY() + ";" + e.getBlock().getLocation().getBlockZ());
-                    Chat.sendMessage(p, "&7" + Editor.editorDungeonByBreak.get(p.getName() + "_" + dungeon));
+                        Editor.editorDungeonByBreak.put(p.getName() + "_" + dungeon, e.getBlock().getLocation().getX()
+                                + ";" + e.getBlock().getLocation().getY() + ";" + e.getBlock().getLocation().getZ() + ";"
+                                + e.getBlock().getLocation().getYaw() + ";" + e.getBlock().getLocation().getPitch());
                     Editor.editDungeon(p, dungeon);
                     e.setCancelled(true);
                 } else if (Editor.editorDungeonInfo.get(p.getName() + "_" + dungeon).equalsIgnoreCase("dungeon_complete_location")) {
                     if (Editor.editorDungeonByBreak.containsKey(p.getName() + "_" + dungeon)) {
-                        Editor.editorDungeonByBreak.replace(p.getName() + "_" + dungeon, p.getWorld().getName() + ";" + e.getBlock().getLocation().getBlockX()
-                                + ";" + e.getBlock().getLocation().getBlockY() + ";" + e.getBlock().getLocation().getBlockZ());
+                        Editor.editorDungeonByBreak.replace(p.getName() + "_" + dungeon, p.getWorld().getName() + ";" + e.getBlock().getLocation().getX()
+                                + ";" + e.getBlock().getLocation().getY() + ";" + e.getBlock().getLocation().getZ() + ";"
+                                + e.getBlock().getLocation().getYaw() + ";" + e.getBlock().getLocation().getPitch());
                     } else
-                        Editor.editorDungeonByBreak.put(p.getName() + "_" + dungeon, p.getWorld().getName() + ";" + e.getBlock().getLocation().getBlockX()
-                                + ";" + e.getBlock().getLocation().getBlockY() + ";" + e.getBlock().getLocation().getBlockZ());
+                        Editor.editorDungeonByBreak.put(p.getName() + "_" + dungeon, p.getWorld().getName() + ";" + e.getBlock().getLocation().getX()
+                                + ";" + e.getBlock().getLocation().getY() + ";" + e.getBlock().getLocation().getZ() + ";"
+                                + e.getBlock().getLocation().getYaw() + ";" + e.getBlock().getLocation().getPitch());
                     Chat.sendMessage(p, "&7" + Editor.editorDungeonByBreak.get(p.getName() + "_" + dungeon));
                     Editor.editDungeon(p, dungeon);
                     e.setCancelled(true);
@@ -41,11 +44,13 @@ public class InteractBlock implements Listener {
                     String editType = Editor.editorStageType.get(p.getName() + "_" + dungeon);
                     if (editType.equalsIgnoreCase("break_block")) {
                         if (Editor.editorDungeonByBreak.containsKey(p.getName() + "_" + dungeon)) {
-                            Editor.editorDungeonByBreak.replace(p.getName() + "_" + dungeon, e.getBlock().getLocation().getBlockX()
-                                    + ";" + e.getBlock().getLocation().getBlockY() + ";" + e.getBlock().getLocation().getBlockZ());
+                            Editor.editorDungeonByBreak.replace(p.getName() + "_" + dungeon, e.getBlock().getLocation().getX()
+                                    + ";" + e.getBlock().getLocation().getY() + ";" + e.getBlock().getLocation().getZ() + ";"
+                                    + e.getBlock().getLocation().getYaw() + ";" + e.getBlock().getLocation().getPitch());
                         } else
-                            Editor.editorDungeonByBreak.put(p.getName() + "_" + dungeon, e.getBlock().getLocation().getBlockX()
-                                    + ";" + e.getBlock().getLocation().getBlockY() + ";" + e.getBlock().getLocation().getBlockZ());
+                            Editor.editorDungeonByBreak.put(p.getName() + "_" + dungeon, e.getBlock().getLocation().getX()
+                                    + ";" + e.getBlock().getLocation().getY() + ";" + e.getBlock().getLocation().getZ() + ";"
+                                    + e.getBlock().getLocation().getYaw() + ";" + e.getBlock().getLocation().getPitch());
                         Chat.sendMessage(p, "&7" + Editor.editorDungeonByBreak.get(p.getName() + "_" + dungeon));
                         Editor.editDungeon(p, dungeon);
                         e.setCancelled(true);

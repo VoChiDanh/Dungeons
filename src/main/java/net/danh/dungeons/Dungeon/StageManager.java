@@ -327,9 +327,18 @@ public class StageManager {
                                 copy(worldName, worldName + "_" + p.getName() + "_" + dungeonID);
                                 String locationJoin = config.getString("location.join");
                                 if (locationJoin != null) {
-                                    int x = Integer.parseInt(locationJoin.split(";")[0]);
-                                    int y = Integer.parseInt(locationJoin.split(";")[1]);
-                                    int z = Integer.parseInt(locationJoin.split(";")[2]);
+                                    double x = Double.parseDouble(locationJoin.split(";")[0]);
+                                    double y = Double.parseDouble(locationJoin.split(";")[1]);
+                                    double z = Double.parseDouble(locationJoin.split(";")[2]);
+                                    float yaw;
+                                    float pitch;
+                                    if (locationJoin.split(";").length == 5) {
+                                        yaw = Float.parseFloat(locationJoin.split(";")[3]);
+                                        pitch = Float.parseFloat(locationJoin.split(";")[4]);
+                                    } else {
+                                        pitch = 0;
+                                        yaw = 0;
+                                    }
                                     World world = Bukkit.getWorld(worldName + "_" + p.getName() + "_" + dungeonID);
                                     if (world != null) {
                                         CountdownTimer countdownTimer = new CountdownTimer(Dungeons.getDungeonCore(),
@@ -343,7 +352,7 @@ public class StageManager {
                                                 },
                                                 () -> {
                                                     gamemode.put(p, p.getGameMode());
-                                                    Location location = new Location(world, x, y, z);
+                                                    Location location = new Location(world, x, y, z, yaw, pitch);
                                                     p.teleport(location);
                                                     List<String> commands = config.getStringList("commands.join");
                                                     if (!commands.isEmpty()) {
@@ -386,10 +395,7 @@ public class StageManager {
                         status.replace(p, DungeonStatus.ENDING);
                         Chat.sendMessage(p, Objects.requireNonNull(Files.getMessage().getString("user.end_dungeon"))
                                 .replace("<name>", Objects.requireNonNull(config.getString("name"))));
-                        int x = Integer.parseInt(locationComplete.split(";")[1]);
-                        int y = Integer.parseInt(locationComplete.split(";")[2]);
-                        int z = Integer.parseInt(locationComplete.split(";")[3]);
-                        Location rLocation = new Location(world, x, y, z);
+                        Location rLocation = getLocation(locationComplete.replace(locationComplete.split(";")[0] + ";", ""), world);
                         CountdownTimer countdownTimer = new CountdownTimer(Dungeons.getDungeonCore(),
                                 !remove_countdown ? config.getInt("times.complete", 3) : 0,
                                 () -> Chat.sendMessage(p, Objects.requireNonNull(Files.getMessage().getString("dungeons.times.end_soon"))),
@@ -431,6 +437,22 @@ public class StageManager {
                 }
             }
         }
+    }
+
+    public static @NotNull Location getLocation(String location, World world) {
+        double x = Double.parseDouble(location.split(";")[0]);
+        double y = Double.parseDouble(location.split(";")[1]);
+        double z = Double.parseDouble(location.split(";")[2]);
+        float yaw;
+        float pitch;
+        if (location.split(";").length == 5) {
+            yaw = Float.parseFloat(location.split(";")[3]);
+            pitch = Float.parseFloat(location.split(";")[4]);
+        } else {
+            pitch = 0;
+            yaw = 0;
+        }
+        return new Location(world, x, y, z, yaw, pitch);
     }
 
     @Contract(pure = true)

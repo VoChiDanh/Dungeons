@@ -1,6 +1,7 @@
 package net.danh.dungeons.GUI.Stages;
 
 import net.danh.dungeons.API.DungeonsAPI;
+import net.danh.dungeons.Dungeon.StageManager;
 import net.danh.dungeons.Dungeons;
 import net.danh.dungeons.GUI.Editor;
 import net.danh.dungeons.GUI.Stages.Manager.StageBase;
@@ -102,10 +103,7 @@ public class MythicKillMobs extends StageBase {
                         if (location != null) {
                             World world = Bukkit.getWorld(Objects.requireNonNull(config.getString("world")) + "_" + p.getName() + "_" + dungeonID);
                             if (world != null) {
-                                int x = Integer.parseInt(location.split(";")[0]);
-                                int y = Integer.parseInt(location.split(";")[1]);
-                                int z = Integer.parseInt(location.split(";")[2]);
-                                Location rLocation = new Location(world, x, y, z);
+                                Location rLocation = StageManager.getLocation(location, world);
                                 if (Dungeons.getMythicAPI().getDisplayName(type) != null) {
                                     for (int i = 0; i < amount; i++) {
                                         Dungeons.getMythicAPI().spawnMythicMob(type, rLocation);

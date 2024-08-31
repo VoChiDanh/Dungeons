@@ -1,13 +1,13 @@
 package net.danh.dungeons.GUI.Stages;
 
 import net.danh.dungeons.API.DungeonsAPI;
+import net.danh.dungeons.Dungeon.StageManager;
 import net.danh.dungeons.GUI.Stages.Manager.StageBase;
 import net.danh.dungeons.Listeners.BlockBreak;
 import net.danh.dungeons.Resources.Chat;
 import net.danh.dungeons.Resources.Files;
 import net.xconfig.bukkit.model.SimpleConfigurationManager;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -65,9 +65,6 @@ public class ShootBlock extends StageBase {
             String location = config.getString("stages.stage_" + stageNumber + ".location");
             World world = Bukkit.getWorld(Objects.requireNonNull(config.getString("world")) + "_" + p.getName() + "_" + dungeonID);
             if (location != null) {
-                int x = Integer.parseInt(location.split(";")[0]);
-                int y = Integer.parseInt(location.split(";")[1]);
-                int z = Integer.parseInt(location.split(";")[2]);
                 if (p.getWorld().equals(world)) {
                     int amount = config.getInt("stages.stage_" + stageNumber + ".amount");
                     return Chat.normalColorize(Objects.requireNonNull(Files.getMessage().getString("dungeons.stage.shoot_block"))
@@ -76,8 +73,8 @@ public class ShootBlock extends StageBase {
                             .replace("%z%", location.split(";")[2])
                             .replace("%shot%", String.valueOf(BlockBreak.block_data.getOrDefault(p.getName() + "_" + dungeonID, 0)))
                             .replace("%amount%", String.valueOf(amount))
-                            .replace("%block%", Chat.caseOnWords(new Location(world, x, y, z).getBlock().getType().toString()))
-                            .replace("%distance%", String.valueOf((int) p.getLocation().distance(new Location(world, x, y, z)))));
+                            .replace("%block%", Chat.caseOnWords(StageManager.getLocation(location, world).getBlock().getType().toString()))
+                            .replace("%distance%", String.valueOf((int) p.getLocation().distance(StageManager.getLocation(location, world)))));
                 }
             }
         }
