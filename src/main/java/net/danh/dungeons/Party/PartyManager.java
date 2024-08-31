@@ -104,6 +104,15 @@ public class PartyManager {
         return null;
     }
 
+    public static @Nullable Player getPartyLeader(Player p) {
+        if (inParty(p)) {
+            if (!isPartyLeader(p)) {
+                return Bukkit.getPlayer(partyInformation.get(getPartyID(p) + PartyData.leader.getString()));
+            }
+        } else Chat.sendMessage(p, Files.getMessage().getString("party.not_in_party"));
+        return null;
+    }
+
     public static void setDisplay(Player p, String display) {
         if (inParty(p)) {
             if (isPartyLeader(p)) {
@@ -121,7 +130,7 @@ public class PartyManager {
         if (inParty(p)) {
             if (!isPartyLeader(p)) {
                 String party = getPartyID(p);
-                List<String> members = partyMember.get(party);
+                List<String> members = new ArrayList<>(partyMember.get(party));
                 members.remove(p.getName());
                 partyMember.replace(party, members);
                 partyManager.remove(p.getName(), party);
@@ -137,7 +146,7 @@ public class PartyManager {
                 if (!inParty(invited)) {
                     if (!isPartyLeader(invited)) {
                         String party = getPartyID(leader);
-                        List<String> members = partyMember.get(party);
+                        List<String> members = new ArrayList<>(partyMember.get(party));
                         members.forEach(member -> {
                             Player p = Bukkit.getPlayer(member);
                             if (p != null) {

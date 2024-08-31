@@ -43,6 +43,18 @@ public class Dungeon_MainCMD extends CMDBase {
                                 if (invited != null)
                                     PartyManager.invite(p, invited);
                             }
+                            if (args[1].equalsIgnoreCase("kick")) {
+                                Player kick = Bukkit.getPlayer(args[2]);
+                                if (kick != null)
+                                    if (PartyManager.inParty(p)) {
+                                        Player leader = PartyManager.getPartyLeader(p);
+                                        if (leader != null) {
+                                            if (leader.equals(p) && !leader.equals(kick)) {
+                                                PartyManager.kick(kick);
+                                            }
+                                        }
+                                    }
+                            }
                         }
                         if (args.length >= 3) {
                             if (args[1].equalsIgnoreCase("rename")) {
