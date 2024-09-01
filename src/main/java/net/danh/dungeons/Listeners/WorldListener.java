@@ -16,8 +16,8 @@ public class WorldListener implements Listener {
         String worldName = world.getName();
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (worldName.contains(p.getName())
-            || worldName.contains(p.getName().toLowerCase())
-            || worldName.contains(p.getName().toUpperCase())) {
+                    || worldName.contains(p.getName().toLowerCase())
+                    || worldName.contains(p.getName().toUpperCase())) {
                 world.setKeepSpawnInMemory(false);
             }
         }

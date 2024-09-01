@@ -8,6 +8,7 @@ import net.danh.dungeons.GUI.Listeners.InteractBlock;
 import net.danh.dungeons.GUI.Stages.Manager.StageBase;
 import net.danh.dungeons.GUI.Stages.Manager.StageRegistry;
 import net.danh.dungeons.Listeners.*;
+import net.danh.dungeons.Party.PartyManager;
 import net.danh.dungeons.Placeholder.DungeonPAPI;
 import net.danh.dungeons.Resources.Files;
 import net.danh.dungeons.Utils.MythicAPI;
@@ -81,7 +82,11 @@ public final class Dungeons extends JavaPlugin {
     public void onDisable() {
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (StageManager.inDungeon(p)) {
-                StageManager.endDungeon(p, false, true);
+                if (StageManager.inDungeon(p)) {
+                    if (!PartyManager.inParty(p))
+                        StageManager.endDungeon(p, false, true);
+                    else StageManager.endPartyDungeon(p, false, true);
+                }
             }
         }
         Files.saveFiles();

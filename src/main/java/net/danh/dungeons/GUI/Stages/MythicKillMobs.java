@@ -6,6 +6,7 @@ import net.danh.dungeons.Dungeons;
 import net.danh.dungeons.GUI.Editor;
 import net.danh.dungeons.GUI.Stages.Manager.StageBase;
 import net.danh.dungeons.Listeners.VanillaMobs;
+import net.danh.dungeons.Party.PartyManager;
 import net.danh.dungeons.Resources.Chat;
 import net.danh.dungeons.Resources.Files;
 import net.xconfig.bukkit.model.SimpleConfigurationManager;
@@ -69,6 +70,7 @@ public class MythicKillMobs extends StageBase {
 
     @Override
     public @NotNull String getDisplay(Player p) {
+        p = PartyManager.getPlayer(p);
         String dungeonID = DungeonsAPI.getDungeon(p);
         int stageNumber = DungeonsAPI.getDungeonStage(p);
         if (dungeonID != null && stageNumber > 0) {
@@ -89,6 +91,7 @@ public class MythicKillMobs extends StageBase {
 
     @Override
     public void activePreStage(Player p) {
+        p = PartyManager.getPlayer(p);
         if (getPreData() != null) {
             String dungeonID = DungeonsAPI.getDungeon(p);
             int stageNumber = DungeonsAPI.getDungeonStage(p);

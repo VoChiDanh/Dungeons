@@ -3,6 +3,7 @@ package net.danh.dungeons.GUI.Stages;
 import net.danh.dungeons.API.DungeonsAPI;
 import net.danh.dungeons.Dungeon.StageManager;
 import net.danh.dungeons.GUI.Stages.Manager.StageBase;
+import net.danh.dungeons.Party.PartyManager;
 import net.danh.dungeons.Resources.Chat;
 import net.danh.dungeons.Resources.Files;
 import net.xconfig.bukkit.model.SimpleConfigurationManager;
@@ -51,14 +52,14 @@ public class ReachLocation extends StageBase {
 
     @Override
     public @NotNull String getDisplay(@NotNull Player p) {
-        String dungeonID = DungeonsAPI.getDungeon(p);
-        int stageNumber = DungeonsAPI.getDungeonStage(p);
+        String dungeonID = DungeonsAPI.getDungeon(PartyManager.getPlayer(p));
+        int stageNumber = DungeonsAPI.getDungeonStage(PartyManager.getPlayer(p));
         if (dungeonID != null && stageNumber > 0) {
             FileConfiguration config = SimpleConfigurationManager.get().get("Dungeons/" + dungeonID + ".yml");
             String location = config.getString("stages.stage_" + stageNumber + ".location");
-            World world = Bukkit.getWorld(Objects.requireNonNull(config.getString("world")) + "_" + p.getName() + "_" + dungeonID);
+            World world = Bukkit.getWorld(Objects.requireNonNull(config.getString("world")) + "_" + PartyManager.getPlayer(p).getName() + "_" + dungeonID);
             if (location != null) {
-                if (p.getWorld().equals(world)) {
+                if (PartyManager.getPlayer(p).getWorld().equals(world)) {
                     return Chat.normalColorize(Objects.requireNonNull(Files.getMessage().getString("dungeons.stage.reach_location"))
                             .replace("%x%", location.split(";")[0])
                             .replace("%y%", location.split(";")[1])

@@ -84,7 +84,9 @@ public class Dungeon_MainCMD extends CMDBase {
                 if (c instanceof Player) {
                     Player p = (Player) c;
                     if (StageManager.inDungeon(p)) {
-                        StageManager.endDungeon(p, false, false);
+                        if (!PartyManager.inParty(p))
+                            StageManager.endDungeon(p, false, false);
+                        else StageManager.endPartyDungeon(p, false, false);
                     }
                 }
             }
@@ -92,7 +94,9 @@ public class Dungeon_MainCMD extends CMDBase {
             if (args[0].equalsIgnoreCase("start")) {
                 if (c instanceof Player) {
                     Player p = (Player) c;
-                    StageManager.startDungeon(p, args[1]);
+                    if (!PartyManager.inParty(p))
+                        StageManager.startDungeon(p, args[1]);
+                    else StageManager.startPartyDungeon(p, args[1]);
                 }
             } else if (args[0].equalsIgnoreCase("editor")) {
                 if (c.hasPermission("dungeons.admin")) {
@@ -107,7 +111,9 @@ public class Dungeon_MainCMD extends CMDBase {
                 if (c.hasPermission("dungeons.admin")) {
                     Player p = Bukkit.getPlayer(args[2]);
                     if (p != null) {
-                        StageManager.startDungeon(p, args[1]);
+                        if (!PartyManager.inParty(p))
+                            StageManager.startDungeon(p, args[1]);
+                        else StageManager.startPartyDungeon(p, args[1]);
                     }
                 }
             }

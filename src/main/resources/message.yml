@@ -10,7 +10,7 @@ party:
   create: "&bParty <name>&b has been created"
   disband: "&cParty <name>&c has been dissolved"
   rename: "&eParty <name>&e was renamed to <new_name>"
-  kick: "&cYou was kicked from party <name>"
+  kick: "&c<player> was kicked from Party <name>"
   party_join: "&b<player>&b join your party"
   player_join: "&bYou join party <name>"
   already_has_name: "&cAlready has party name <name>"

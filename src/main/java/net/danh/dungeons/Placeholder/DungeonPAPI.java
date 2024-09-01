@@ -36,28 +36,28 @@ public class DungeonPAPI extends PlaceholderExpansion {
     public @Nullable String onPlaceholderRequest(Player p, @NotNull String args) {
         if (p == null) return null;
         if (args.equalsIgnoreCase("stage_display")) {
-            if (StageManager.inDungeon(p)) {
-                if (StageManager.getStageDisplay(p) != null)
+            if (StageManager.inDungeon(PartyManager.getPlayer(p))) {
+                if (StageManager.getStageDisplay(PartyManager.getPlayer(p)) != null)
                     return StageManager.getStageDisplay(p);
                 else return "";
             }
         }
         if (args.equalsIgnoreCase("in_dungeon")) {
-            return String.valueOf(StageManager.inDungeon(p));
+            return String.valueOf(StageManager.inDungeon(PartyManager.getPlayer(p)));
         }
         if (args.equalsIgnoreCase("dungeon")) {
-            if (StageManager.inDungeon(p)) {
-                return new DungeonManager(StageManager.getPlayerDungeon(p)).getDisplayName();
+            if (StageManager.inDungeon(PartyManager.getPlayer(p))) {
+                return new DungeonManager(StageManager.getPlayerDungeon(PartyManager.getPlayer(p))).getDisplayName();
             } else return "";
         }
         if (args.equalsIgnoreCase("lives")) {
-            if (StageManager.inDungeon(p)) {
+            if (StageManager.inDungeon(PartyManager.getPlayer(p))) {
                 return String.valueOf(DungeonsAPI.getLives(p));
             }
         }
         if (args.equalsIgnoreCase("party")) {
-            if (PartyManager.inParty(p))
-                return Chat.normalColorize(PartyManager.getPartyDisplay(PartyManager.getPartyID(p)));
+            if (PartyManager.inParty(PartyManager.getPlayer(p)))
+                return Chat.normalColorize(PartyManager.getPartyDisplay(PartyManager.getPartyID(PartyManager.getPlayer(p))));
             else return "";
         }
         return null;

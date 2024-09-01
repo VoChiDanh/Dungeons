@@ -5,6 +5,7 @@ import net.danh.dungeons.Dungeons;
 import net.danh.dungeons.GUI.Editor;
 import net.danh.dungeons.GUI.Stages.Manager.StageBase;
 import net.danh.dungeons.GUI.Stages.Manager.StageRegistry;
+import net.danh.dungeons.Party.PartyManager;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -49,8 +50,8 @@ public class DungeonsAPI {
     }
 
     public static int getLives(Player p) {
-        if (StageManager.inDungeon(p) && getDungeon(p) != null) {
-            return StageManager.lives.get(p.getName() + "_" + getDungeon(p));
+        if (StageManager.inDungeon(PartyManager.getPlayer(p)) && getDungeon(PartyManager.getPlayer(p)) != null) {
+            return StageManager.lives.get(p.getName() + "_" + getDungeon(PartyManager.getPlayer(p)));
         }
         return -1;
     }

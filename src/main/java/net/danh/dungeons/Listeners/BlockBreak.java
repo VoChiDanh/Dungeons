@@ -2,6 +2,7 @@ package net.danh.dungeons.Listeners;
 
 import net.danh.dungeons.Dungeon.DungeonManager;
 import net.danh.dungeons.Dungeon.StageManager;
+import net.danh.dungeons.Party.PartyManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -31,6 +32,7 @@ public class BlockBreak implements Listener {
         if (e.getEntity().getShooter() instanceof Player) {
             Player p = (Player) e.getEntity().getShooter();
             if (StageManager.inDungeon(p)) {
+                p = PartyManager.getPlayer(p);
                 String dungeonID = StageManager.getPlayerDungeon(p);
                 DungeonManager dungeonManager = new DungeonManager(dungeonID);
                 int stageNumber = StageManager.getStageNumber(p);
@@ -82,7 +84,7 @@ public class BlockBreak implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onBreak(@NotNull BlockBreakEvent e) {
-        Player p = e.getPlayer();
+        Player p = PartyManager.getPlayer(e.getPlayer());
         if (StageManager.inDungeon(p)) {
             String dungeonID = StageManager.getPlayerDungeon(p);
             DungeonManager dungeonManager = new DungeonManager(dungeonID);

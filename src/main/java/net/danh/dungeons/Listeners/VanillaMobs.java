@@ -3,6 +3,7 @@ package net.danh.dungeons.Listeners;
 import net.danh.dungeons.Dungeon.DungeonManager;
 import net.danh.dungeons.Dungeon.StageManager;
 import net.danh.dungeons.Dungeons;
+import net.danh.dungeons.Party.PartyManager;
 import net.danh.dungeons.Resources.Number;
 import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
@@ -24,6 +25,7 @@ public class VanillaMobs implements Listener {
         Player p = mob.getKiller();
         String vanillaMobs = e.getEntityType().toString();
         if (p != null) {
+            p = PartyManager.getPlayer(p);
             if (StageManager.inDungeon(p)) {
                 String dungeonID = StageManager.getPlayerDungeon(p);
                 DungeonManager dungeonManager = new DungeonManager(dungeonID);

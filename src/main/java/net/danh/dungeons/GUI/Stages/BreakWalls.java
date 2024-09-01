@@ -3,6 +3,7 @@ package net.danh.dungeons.GUI.Stages;
 import net.danh.dungeons.API.DungeonsAPI;
 import net.danh.dungeons.Dungeon.StageManager;
 import net.danh.dungeons.GUI.Stages.Manager.StageBase;
+import net.danh.dungeons.Party.PartyManager;
 import net.danh.dungeons.Resources.Chat;
 import net.danh.dungeons.Resources.Files;
 import net.xconfig.bukkit.model.SimpleConfigurationManager;
@@ -56,6 +57,7 @@ public class BreakWalls extends StageBase {
 
     @Override
     public @NotNull String getDisplay(Player p) {
+        p = PartyManager.getPlayer(p);
         String dungeonID = DungeonsAPI.getDungeon(p);
         int stageNumber = DungeonsAPI.getDungeonStage(p);
         if (dungeonID != null && stageNumber > 0) {

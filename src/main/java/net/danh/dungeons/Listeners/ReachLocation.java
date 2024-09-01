@@ -2,6 +2,7 @@ package net.danh.dungeons.Listeners;
 
 import net.danh.dungeons.Dungeon.DungeonManager;
 import net.danh.dungeons.Dungeon.StageManager;
+import net.danh.dungeons.Party.PartyManager;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -16,7 +17,7 @@ public class ReachLocation implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onMove(@NotNull PlayerMoveEvent e) {
-        Player p = e.getPlayer();
+        Player p = PartyManager.getPlayer(e.getPlayer());
         if (StageManager.inDungeon(p)) {
             String dungeonID = StageManager.getPlayerDungeon(p);
             DungeonManager dungeonManager = new DungeonManager(dungeonID);
