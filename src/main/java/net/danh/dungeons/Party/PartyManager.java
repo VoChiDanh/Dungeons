@@ -32,8 +32,8 @@ public class PartyManager {
         String id = getPartyID(p);
         if (partyManager.containsValue(id) && partyManager.containsKey(p.getName())) {
             if (partyInformation.get(id + PartyData.leader.getString()).contains(p.getName())) {
-                Chat.sendMessage(p, Objects.requireNonNull(Files.getMessage().getString("party.disband"))
-                        .replace("<name>", getPartyDisplay(id)));
+                getMembers(p).forEach(partyMember -> Chat.sendMessage(partyMember, Objects.requireNonNull(Files.getMessage().getString("party.disband"))
+                        .replace("<name>", getPartyDisplay(id))));
                 List<String> pInfo = new ArrayList<>(partyInformation.keySet());
                 for (String key : pInfo) {
                     if (key.contains(id))

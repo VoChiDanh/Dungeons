@@ -5,6 +5,8 @@ import net.danh.dungeons.API.DungeonsAPI;
 import net.danh.dungeons.Dungeon.DungeonManager;
 import net.danh.dungeons.Dungeon.StageManager;
 import net.danh.dungeons.Dungeons;
+import net.danh.dungeons.Party.PartyManager;
+import net.danh.dungeons.Resources.Chat;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -52,6 +54,11 @@ public class DungeonPAPI extends PlaceholderExpansion {
             if (StageManager.inDungeon(p)) {
                 return String.valueOf(DungeonsAPI.getLives(p));
             }
+        }
+        if (args.equalsIgnoreCase("party")) {
+            if (PartyManager.inParty(p))
+                return Chat.normalColorize(PartyManager.getPartyDisplay(PartyManager.getPartyID(p)));
+            else return "";
         }
         return null;
     }

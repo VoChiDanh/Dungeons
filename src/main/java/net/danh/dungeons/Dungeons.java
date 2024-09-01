@@ -71,7 +71,7 @@ public final class Dungeons extends JavaPlugin {
             isMMOItemsInstalled = true;
             Dungeons.getDungeonCore().getLogger().info("Compatible with MMOItems");
         }
-        registerEvents(new ReachLocation(), new VanillaMobs(), new Death(), new JoinQuit(), new BlockBreak(), new Chat(), new InteractBlock(), new BlackListCMD());
+        registerEvents(new WorldListener(), new ReachLocation(), new VanillaMobs(), new Death(), new JoinQuit(), new BlockBreak(), new Chat(), new InteractBlock(), new BlackListCMD());
         registerStages();
         registerEvents(new UpdateChecker(dungeons));
         new UpdateChecker(dungeons).fetch();

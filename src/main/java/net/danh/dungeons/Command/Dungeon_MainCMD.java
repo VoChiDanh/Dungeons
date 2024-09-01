@@ -102,6 +102,15 @@ public class Dungeon_MainCMD extends CMDBase {
                     }
                 }
             }
+        } else if (args.length == 3) {
+            if (args[0].equalsIgnoreCase("start")) {
+                if (c.hasPermission("dungeons.admin")) {
+                    Player p = Bukkit.getPlayer(args[2]);
+                    if (p != null) {
+                        StageManager.startDungeon(p, args[1]);
+                    }
+                }
+            }
         }
     }
 
@@ -158,6 +167,10 @@ public class Dungeon_MainCMD extends CMDBase {
                     if (!players.isEmpty())
                         commands.addAll(players);
                 }
+            }
+            if (args[0].equalsIgnoreCase("start")) {
+                if (sender.hasPermission("dungeons.admin"))
+                    Bukkit.getOnlinePlayers().forEach(p -> commands.add(p.getName()));
             }
             StringUtil.copyPartialMatches(args[2], commands, completions);
         }
