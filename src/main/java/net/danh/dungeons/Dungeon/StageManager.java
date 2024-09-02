@@ -251,7 +251,8 @@ public class StageManager {
                         int amount = Integer.parseInt(reqSplit[2]);
                         if (itemStack != null) {
                             if (itemStack.getType() != Material.AIR) {
-                                if (itemStack.getType().toString().equals(itemType) && !itemStack.hasItemMeta()) {
+                                if (itemStack.getType().toString().equals(itemType)
+                                        && !itemStack.hasItemMeta()) {
                                     if (getPlayerAmount(p, itemStack) >= amount) {
                                         amountCheck++;
                                         checkedItems.add(s);
@@ -300,7 +301,8 @@ public class StageManager {
                         int amount = Integer.parseInt(reqSplit[2]);
                         if (itemStack != null) {
                             if (itemStack.getType() != Material.AIR) {
-                                if (itemStack.getType().toString().equals(itemType) && !itemStack.hasItemMeta()) {
+                                if (itemStack.getType().toString().equals(itemType)
+                                        && !itemStack.hasItemMeta()) {
                                     if (getPlayerAmount(p, itemStack) >= amount) {
                                         removeItems(p, itemStack, amount);
                                         amountCheck++;
