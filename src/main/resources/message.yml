@@ -22,7 +22,7 @@ party:
   player_in_dungeon: "&cYou can't invited <player> because they are in dungeon!"
   send_invite: "&aAn invitation to join Party <name> has been sent to <player>"
   send_player_invite: "&aAn invitation to join Party <name> has been sent from <player>. Use [/party accept <id>] to join"
-  already_invite: "&cYou are already invite <player>. Ask that player use [/party accept <id>] to join"
+  already_invite: "&cYou are already invite <player>. Ask that player use [/dungeons party accept <id>] to join"
   expired_player_invite: "&c<player>'s invitation to join party <name> has expired"
   expired_invite: "&cParty invitation for <player> has expired"
   not_invited: "&cYou are not invited to this party"
