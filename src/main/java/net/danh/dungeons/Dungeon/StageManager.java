@@ -473,8 +473,9 @@ public class StageManager {
                                         }
                                     },
                                     () -> {
-                                        players.forEach(player -> {
+                                        for (Player player : p.getWorld().getPlayers())
                                             player.teleport(rLocation);
+                                        players.forEach(player -> {
                                             player.removePotionEffect(PotionEffectType.BLINDNESS);
                                             player.setGameMode(gamemode.get(player));
                                             lives.remove(player.getName() + "_" + dungeonID);
@@ -492,8 +493,6 @@ public class StageManager {
                                                 }
                                             }
                                         });
-                                        for (Player player : p.getWorld().getPlayers())
-                                            player.teleport(rLocation);
                                         delete(config.getString("world") + "_" + p.getName() + "_" + dungeonID);
                                         stage.remove(p.getName() + "_" + dungeonID);
                                         dungeon.remove(p, dungeonID);
