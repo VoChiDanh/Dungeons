@@ -1,7 +1,10 @@
 package net.danh.dungeons.Party;
 
+import net.danh.dungeons.Dungeon.StageManager;
+import net.danh.dungeons.Dungeons;
 import net.danh.dungeons.Resources.Chat;
 import net.danh.dungeons.Resources.Files;
+import net.danh.dungeons.Utils.CountdownTimer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Contract;
@@ -15,6 +18,8 @@ public class PartyManager {
     public static HashMap<String, String> partyManager = new HashMap<>();
     public static HashMap<String, List<String>> partyMember = new HashMap<>();
     public static HashMap<String, String> partyInformation = new HashMap<>();
+    public static HashMap<String, Player> inviteParty = new HashMap<>();
+    public static HashMap<Player, CountdownTimer> sentInvite = new HashMap<>();
 
     public static void createParty(Player p, String id) {
         if (!partyManager.containsValue(id)) {
@@ -30,23 +35,25 @@ public class PartyManager {
 
     public static void disbandParty(Player p) {
         String id = getPartyID(p);
-        if (partyManager.containsValue(id) && partyManager.containsKey(p.getName())) {
-            if (partyInformation.get(id + PartyData.leader.getString()).contains(p.getName())) {
-                getMembers(p).forEach(partyMember -> Chat.sendMessage(partyMember, Objects.requireNonNull(Files.getMessage().getString("party.disband"))
-                        .replace("<name>", getPartyDisplay(id))));
-                List<String> pInfo = new ArrayList<>(partyInformation.keySet());
-                for (String key : pInfo) {
-                    if (key.contains(id))
-                        partyInformation.remove(key);
-                }
-                List<String> pManager = new ArrayList<>(partyManager.keySet());
-                for (String key : pManager) {
-                    if (partyManager.get(key).equalsIgnoreCase(id))
-                        partyManager.remove(key, id);
-                }
-                partyMember.remove(id);
-            } else Chat.sendMessage(p, Files.getMessage().getString("party.not_leader"));
-        } else Chat.sendMessage(p, Files.getMessage().getString("party.not_in_party"));
+        if (id != null) {
+            if (partyManager.containsValue(id) && partyManager.containsKey(p.getName())) {
+                if (partyInformation.get(id + PartyData.leader.getString()).contains(p.getName())) {
+                    getMembers(p).forEach(partyMember -> Chat.sendMessage(partyMember, Objects.requireNonNull(Files.getMessage().getString("party.disband"))
+                            .replace("<name>", getPartyDisplay(id))));
+                    List<String> pInfo = new ArrayList<>(partyInformation.keySet());
+                    for (String key : pInfo) {
+                        if (key.contains(id))
+                            partyInformation.remove(key);
+                    }
+                    List<String> pManager = new ArrayList<>(partyManager.keySet());
+                    for (String key : pManager) {
+                        if (partyManager.get(key).equalsIgnoreCase(id))
+                            partyManager.remove(key, id);
+                    }
+                    partyMember.remove(id);
+                } else Chat.sendMessage(p, Files.getMessage().getString("party.not_leader"));
+            } else Chat.sendMessage(p, Files.getMessage().getString("party.not_in_party"));
+        }
     }
 
     public static Player getPlayer(Player p) {
@@ -66,6 +73,19 @@ public class PartyManager {
                 }
             });
         }
+        return players;
+    }
+
+    @Contract(pure = true)
+    public static @NotNull List<Player> getMembers(String partyID) {
+        List<Player> players = new ArrayList<>();
+        List<String> members = partyMember.get(partyID);
+        members.forEach(member -> {
+            Player player = Bukkit.getPlayer(member);
+            if (player != null) {
+                players.add(player);
+            }
+        });
         return players;
     }
 
@@ -111,6 +131,14 @@ public class PartyManager {
         return null;
     }
 
+    public static @Nullable Player getPartyLeader(String partyID) {
+        for (Player player : getMembers(partyID)){
+            if (isPartyLeader(player))
+                return Bukkit.getPlayer(partyInformation.get(getPartyID(player) + PartyData.leader.getString()));
+        }
+        return null;
+    }
+
     public static void setDisplay(Player p, String display) {
         if (inParty(p)) {
             if (isPartyLeader(p)) {
@@ -128,9 +156,14 @@ public class PartyManager {
         if (inParty(p)) {
             if (!isPartyLeader(p)) {
                 String party = getPartyID(p);
-                getMembers(p).forEach(player -> Chat.sendMessage(player, Objects.requireNonNull(Files.getMessage().getString("party.kick"))
-                        .replace("<name>", getPartyDisplay(party))
-                        .replace("<player>", p.getName())));
+                getMembers(p).forEach(player -> {
+                    if (player != p)
+                        Chat.sendMessage(player, Objects.requireNonNull(Files.getMessage().getString("party.kick"))
+                                .replace("<name>", getPartyDisplay(party))
+                                .replace("<player>", p.getName()));
+                });
+                Chat.sendMessage(p, Objects.requireNonNull(Files.getMessage().getString("party.kick_player"))
+                        .replace("<name>", getPartyDisplay(party)));
                 List<String> members = new ArrayList<>(partyMember.get(party));
                 members.remove(p.getName());
                 partyMember.replace(party, members);
@@ -139,25 +172,56 @@ public class PartyManager {
         }
     }
 
-    public static void invite(Player leader, Player invited) {
-        if (inParty(leader)) {
+    public static void sendInvite(Player leader, Player invited) {
+        if (inParty(leader) && getPartyID(leader) != null) {
             if (isPartyLeader(leader)) {
                 if (!inParty(invited)) {
                     if (!isPartyLeader(invited)) {
-                        String party = getPartyID(leader);
-                        List<String> members = new ArrayList<>(partyMember.get(party));
-                        members.forEach(member -> {
-                            Player p = Bukkit.getPlayer(member);
-                            if (p != null) {
-                                Chat.sendMessage(p, Objects.requireNonNull(Files.getMessage().getString("party.party_join"))
-                                        .replace("<player>", invited.getName()));
-                            }
-                        });
-                        members.add(invited.getName());
-                        partyMember.replace(party, members);
-                        partyManager.put(invited.getName(), party);
-                        Chat.sendMessage(invited, Objects.requireNonNull(Files.getMessage().getString("party.player_join"))
-                                .replace("<name>", getPartyDisplay(party)));
+                        if (!StageManager.inDungeon(leader) && !StageManager.inDungeon(invited)) {
+                            if (!(inviteParty.containsKey(leader.getName() + "_" + getPartyID(leader))
+                                    && inviteParty.get(leader.getName() + "_" + getPartyID(leader)).equals(invited))) {
+                                CountdownTimer countdownTimer = new CountdownTimer(Dungeons.getDungeonCore(), Files.getConfig().getInt("party.timeout_invite", 120)
+                                        , () -> {
+                                    inviteParty.put(leader.getName() + "_" + getPartyID(leader), invited);
+                                    getMembers(leader).forEach(player ->
+                                            Chat.sendMessage(player, Objects.requireNonNull(Files.getMessage().getString("party.send_invite"))
+                                                    .replace("<name>", getPartyDisplay(getPartyID(leader)))
+                                                    .replace("<player>", invited.getName())));
+                                    Chat.sendMessage(invited, Objects.requireNonNull(Files.getMessage().getString("party.send_player_invite"))
+                                            .replace("<name>", getPartyDisplay(getPartyID(leader)))
+                                            .replace("<player>", invited.getName())
+                                            .replace("<id>", Objects.requireNonNull(getPartyID(leader))));
+                                },
+                                        timer -> {
+
+                                        },
+                                        () -> {
+                                            if (inviteParty.containsKey(leader.getName() + "_" + getPartyID(leader))
+                                                    && inviteParty.get(leader.getName() + "_" + getPartyID(leader)).equals(invited)) {
+                                                inviteParty.remove(leader.getName() + "_" + getPartyID(leader), invited);
+                                                Chat.sendMessage(invited, Objects.requireNonNull(Files.getMessage().getString("party.expired_player_invite"))
+                                                        .replace("<player>", leader.getName())
+                                                        .replace("<name>", getPartyDisplay(getPartyID(leader))));
+                                                Chat.sendMessage(leader, Objects.requireNonNull(Files.getMessage().getString("party.expired_invite"))
+                                                        .replace("<player>", invited.getName()));
+                                            }
+                                        });
+                                countdownTimer.scheduleTimer();
+                                sentInvite.put(invited, countdownTimer);
+                            } else
+                                Chat.sendMessage(leader, Objects.requireNonNull(Files.getMessage().getString("party.already_invite"))
+                                        .replace("<name>", getPartyDisplay(getPartyID(leader)))
+                                        .replace("<player>", invited.getName())
+                                        .replace("<id>", Objects.requireNonNull(getPartyID(leader))));
+                        } else {
+                            if (StageManager.inDungeon(leader))
+                                Chat.sendMessage(leader,
+                                        Objects.requireNonNull(Files.getMessage().getString("party.in_dungeon"))
+                                                .replace("<player>", invited.getName()));
+                            else Chat.sendMessage(leader,
+                                    Objects.requireNonNull(Files.getMessage().getString("party.player_in_dungeon"))
+                                            .replace("<player>", invited.getName()));
+                        }
                     } else
                         Chat.sendMessage(leader, Objects.requireNonNull(Files.getMessage().getString("party.already_in_party"))
                                 .replace("<name>", invited.getName()));
@@ -166,6 +230,54 @@ public class PartyManager {
                             .replace("<name>", invited.getName()));
             } else Chat.sendMessage(leader, Files.getMessage().getString("party.not_leader"));
         } else Chat.sendMessage(leader, Files.getMessage().getString("party.not_in_party"));
+    }
+
+    public static void invite(Player invited, String partyID) {
+        Player leader = getPartyLeader(partyID);
+        if (leader != null) {
+            if (inParty(leader)) {
+                if (isPartyLeader(leader)) {
+                    if (!inParty(invited)) {
+                        if (!isPartyLeader(invited)) {
+                            if (!StageManager.inDungeon(leader) && !StageManager.inDungeon(invited)) {
+                                if (inviteParty.containsKey(leader.getName() + "_" + partyID)
+                                        && inviteParty.get(leader.getName() + "_" + partyID).equals(invited)) {
+                                    inviteParty.remove(leader.getName() + "_" + partyID, invited);
+                                    if (sentInvite.containsKey(invited))
+                                        if (sentInvite.get(invited) != null)
+                                            sentInvite.get(invited).cancelCountdown();
+                                    List<String> members = new ArrayList<>(partyMember.get(partyID));
+                                    members.forEach(member -> {
+                                        Player p = Bukkit.getPlayer(member);
+                                        if (p != null) {
+                                            Chat.sendMessage(p, Objects.requireNonNull(Files.getMessage().getString("party.party_join"))
+                                                    .replace("<player>", invited.getName()));
+                                        }
+                                    });
+                                    members.add(invited.getName());
+                                    partyMember.replace(partyID, members);
+                                    partyManager.put(invited.getName(), partyID);
+                                    Chat.sendMessage(invited, Objects.requireNonNull(Files.getMessage().getString("party.player_join"))
+                                            .replace("<name>", getPartyDisplay(partyID)));
+                                } else Chat.sendMessage(invited, Files.getMessage().getString("party.not_invited"));
+                            } else {
+                                if (StageManager.inDungeon(leader))
+                                    Chat.sendMessage(leader,
+                                            Objects.requireNonNull(Files.getMessage().getString("party.in_dungeon"))
+                                                    .replace("<player>", invited.getName()));
+                                else Chat.sendMessage(leader,
+                                        Objects.requireNonNull(Files.getMessage().getString("party.player_in_dungeon"))
+                                                .replace("<player>", invited.getName()));
+                            }
+                        } else
+                            Chat.sendMessage(leader, Objects.requireNonNull(Files.getMessage().getString("party.already_in_party"))
+                                    .replace("<name>", invited.getName()));
+                    } else
+                        Chat.sendMessage(leader, Objects.requireNonNull(Files.getMessage().getString("party.already_in_party"))
+                                .replace("<name>", invited.getName()));
+                } else Chat.sendMessage(leader, Files.getMessage().getString("party.not_leader"));
+            } else Chat.sendMessage(leader, Files.getMessage().getString("party.not_in_party"));
+        }
     }
 
     public enum PartyData {

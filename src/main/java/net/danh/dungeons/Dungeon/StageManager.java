@@ -741,6 +741,6 @@ public class StageManager {
     }
 
     public static boolean inDungeon(Player p) {
-        return getPlayerDungeon(p) != null;
+        return getPlayerDungeon(PartyManager.getPlayer(p)) != null;
     }
 }

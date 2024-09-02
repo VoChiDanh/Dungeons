@@ -34,6 +34,14 @@ public class Dungeon_MainCMD extends CMDBase {
                             if (args[1].equalsIgnoreCase("disband")) {
                                 PartyManager.disbandParty(p);
                             }
+                            if (args[1].equalsIgnoreCase("leave")) {
+                                if (PartyManager.inParty(p)) {
+                                    Player leader = PartyManager.getPartyLeader(p);
+                                    if (leader != null && leader != p) {
+                                        PartyManager.kick(p);
+                                    }
+                                }
+                            }
                         } else if (args.length == 3) {
                             if (args[1].equalsIgnoreCase("create")) {
                                 PartyManager.createParty(p, args[2]);
@@ -41,7 +49,10 @@ public class Dungeon_MainCMD extends CMDBase {
                             if (args[1].equalsIgnoreCase("invite")) {
                                 Player invited = Bukkit.getPlayer(args[2]);
                                 if (invited != null)
-                                    PartyManager.invite(p, invited);
+                                    PartyManager.sendInvite(p, invited);
+                            }
+                            if (args[1].equalsIgnoreCase("accept")) {
+                                PartyManager.invite(p, args[2]);
                             }
                             if (args[1].equalsIgnoreCase("kick")) {
                                 Player kick = Bukkit.getPlayer(args[2]);
@@ -152,7 +163,9 @@ public class Dungeon_MainCMD extends CMDBase {
             } else if (args[0].equalsIgnoreCase("party") && sender instanceof Player) {
                 commands.add("create");
                 commands.add("rename");
+                commands.add("accept");
                 commands.add("invite");
+                commands.add("leave");
                 commands.add("kick");
                 commands.add("disband");
             }
