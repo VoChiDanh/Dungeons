@@ -31,6 +31,7 @@ public class JoinQuit implements Listener {
                         Location rLocation = StageManager.getLocation(locationComplete.replace(locationComplete.split(";")[0] + ";", ""), world);
                         if (PartyManager.isPartyLeader(p)) {
                             PartyManager.getMembers(p).forEach(player -> player.teleport(rLocation));
+                            Bukkit.getServer().unloadWorld(config.getString("world") + "_" + p.getName() + "_" + dungeonID, false);
                             StageManager.delete(config.getString("world") + "_" + p.getName() + "_" + dungeonID);
                             StageManager.endPartyDungeon(p, false, true);
                         }

@@ -8,7 +8,6 @@ import net.danh.dungeons.GUI.Listeners.InteractBlock;
 import net.danh.dungeons.GUI.Stages.Manager.StageBase;
 import net.danh.dungeons.GUI.Stages.Manager.StageRegistry;
 import net.danh.dungeons.Listeners.*;
-import net.danh.dungeons.Party.PartyManager;
 import net.danh.dungeons.Placeholder.DungeonPAPI;
 import net.danh.dungeons.Resources.Files;
 import net.danh.dungeons.Utils.MythicAPI;
@@ -16,6 +15,9 @@ import net.danh.dungeons.Utils.UpdateChecker;
 import net.xconfig.bukkit.model.SimpleConfigurationManager;
 import org.browsit.milkgui.MilkGUI;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -82,10 +84,14 @@ public final class Dungeons extends JavaPlugin {
     public void onDisable() {
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (StageManager.inDungeon(p)) {
-                if (StageManager.inDungeon(p)) {
-                    if (!PartyManager.inParty(p))
-                        StageManager.endDungeon(p, false, true);
-                    else StageManager.endPartyDungeon(p, false, true);
+                String dungeonID = StageManager.getPlayerDungeon(p);
+                FileConfiguration config = SimpleConfigurationManager.get().get("Dungeons/" + dungeonID + ".yml");
+                String locationComplete = config.getString("location.complete");
+                if (locationComplete != null) {
+                    World world = Bukkit.getWorld(locationComplete.split(";")[0]);
+                    Location rLocation = StageManager.getLocation(locationComplete.replace(locationComplete.split(";")[0] + ";", ""), world);
+                    p.teleport(rLocation);
+                    StageManager.delete(config.getString("world") + "_" + p.getName() + "_" + dungeonID);
                 }
             }
         }

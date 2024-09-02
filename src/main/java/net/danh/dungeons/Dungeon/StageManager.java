@@ -167,7 +167,8 @@ public class StageManager {
                     Chat.sendMessage(p, Files.getMessage().getString("user.check_requirements"));
                     Chat.sendMessage(p, config.getStringList("requirements.item_lore"));
                     return false;
-                } else return getMeetItemsRequirement(p, requirementsItem);
+                }
+
             }
             if (!requirementsInfo.isEmpty()) {
                 int meetRequirements = getMeetRequirements(requirementsInfo);
@@ -176,7 +177,7 @@ public class StageManager {
                     Chat.sendMessage(p, config.getStringList("requirements.info_lore"));
                     return false;
                 }
-                return true;
+
             }
             return true;
         }
@@ -724,8 +725,8 @@ public class StageManager {
         } else {
             if (inDungeon(p)) {
                 if (!PartyManager.inParty(p))
-                    StageManager.endDungeon(p, false, false);
-                else StageManager.endPartyDungeon(p, false, false);
+                    StageManager.endDungeon(p, true, false);
+                else StageManager.endPartyDungeon(p, true, false);
             }
         }
     }
