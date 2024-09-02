@@ -79,13 +79,15 @@ public class PartyManager {
     @Contract(pure = true)
     public static @NotNull List<Player> getMembers(String partyID) {
         List<Player> players = new ArrayList<>();
-        List<String> members = partyMember.get(partyID);
-        members.forEach(member -> {
-            Player player = Bukkit.getPlayer(member);
-            if (player != null) {
-                players.add(player);
-            }
-        });
+        if (partyMember.containsKey(partyID)) {
+            List<String> members = partyMember.get(partyID);
+            members.forEach(member -> {
+                Player player = Bukkit.getPlayer(member);
+                if (player != null) {
+                    players.add(player);
+                }
+            });
+        }
         return players;
     }
 
@@ -132,9 +134,11 @@ public class PartyManager {
     }
 
     public static @Nullable Player getPartyLeader(String partyID) {
-        for (Player player : getMembers(partyID)){
-            if (isPartyLeader(player))
-                return Bukkit.getPlayer(partyInformation.get(getPartyID(player) + PartyData.leader.getString()));
+        if (!getMembers(partyID).isEmpty()) {
+            for (Player player : getMembers(partyID)) {
+                if (isPartyLeader(player))
+                    return Bukkit.getPlayer(partyInformation.get(getPartyID(player) + PartyData.leader.getString()));
+            }
         }
         return null;
     }

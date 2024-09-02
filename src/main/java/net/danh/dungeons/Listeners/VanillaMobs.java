@@ -80,6 +80,7 @@ public class VanillaMobs implements Listener {
         } else {
             World world = mob.getWorld();
             for (Player killer : world.getPlayers()) {
+                killer = PartyManager.getPlayer(killer);
                 if (StageManager.inDungeon(killer)) {
                     String dungeonID = StageManager.getPlayerDungeon(killer);
                     DungeonManager dungeonManager = new DungeonManager(dungeonID);
