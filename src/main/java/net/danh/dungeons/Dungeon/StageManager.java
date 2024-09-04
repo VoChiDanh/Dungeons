@@ -379,69 +379,82 @@ public class StageManager {
             if (configFile.exists()) {
                 FileConfiguration config = SimpleConfigurationManager.get().get("Dungeons/" + dungeonID + ".yml");
                 String worldName = config.getString("world");
-                if (worldName != null) {
-                    File srcDir = new File(Dungeons.getDungeonCore().getDataFolder(), "Worlds/" + worldName);
-                    File srcNormalDir = new File(Bukkit.getServer().getWorldContainer(), worldName);
-                    if (srcDir.exists() || srcNormalDir.exists()) {
-                        if (config.contains("name") && config.getString("name") != null) {
-                            if (checkStatus(players)) {
-                                if (checkReq(players, dungeonID)) {
-                                    updateStatus(players);
-                                    players.forEach(player -> Chat.sendMessage(player,
-                                            Objects.requireNonNull(Files.getMessage().getString("user.start_dungeon"))
-                                                    .replace("<name>", Objects.requireNonNull(config.getString("name")))));
-                                    copy(worldName, worldName + "_" + p.getName() + "_" + dungeonID);
-                                    String locationJoin = config.getString("location.join");
-                                    if (locationJoin != null) {
-                                        double x = Double.parseDouble(locationJoin.split(";")[0]);
-                                        double y = Double.parseDouble(locationJoin.split(";")[1]);
-                                        double z = Double.parseDouble(locationJoin.split(";")[2]);
-                                        float yaw;
-                                        float pitch;
-                                        if (locationJoin.split(";").length == 5) {
-                                            yaw = Float.parseFloat(locationJoin.split(";")[3]);
-                                            pitch = Float.parseFloat(locationJoin.split(";")[4]);
-                                        } else {
-                                            pitch = 0;
-                                            yaw = 0;
-                                        }
-                                        World world = Bukkit.getWorld(worldName + "_" + p.getName() + "_" + dungeonID);
-                                        if (world != null) {
-                                            CountdownTimer countdownTimer = new CountdownTimer(Dungeons.getDungeonCore(), config.getInt("times.start", 3),
-                                                    () -> players.forEach(player -> Chat.sendMessage(player, Objects.requireNonNull(Files.getMessage().getString("dungeons.times.start_soon")))),
-                                                    (t) -> {
-                                                        if (Files.getConfig().getIntegerList("dungeon.show_countdown_at").contains(t.getSecondsLeft())) {
-                                                            players.forEach(player -> Chat.sendMessage(player,
-                                                                    Objects.requireNonNull(Files.getMessage().getString("dungeons.times.start")).replace("<second>", String.valueOf(t.getSecondsLeft()))));
-                                                        }
-                                                    },
-                                                    () -> {
-                                                        Location location = new Location(world, x, y, z, yaw, pitch);
-                                                        players.forEach(player -> {
-                                                            gamemode.put(player, player.getGameMode());
-                                                            player.teleport(location);
-                                                            lives.put(player.getName() + "_" + dungeonID, getDefaultLives(player, dungeonID));
-                                                            List<String> commands = config.getStringList("commands.join");
-                                                            if (!commands.isEmpty()) {
-                                                                commands.forEach(cmd -> new BukkitRunnable() {
-                                                                    @Override
-                                                                    public void run() {
-                                                                        Dungeons.getDungeonCore().getServer().dispatchCommand(Dungeons.getDungeonCore().getServer().getConsoleSender(), PlaceholderAPI.setPlaceholders(player, cmd));
-                                                                    }
-                                                                }.runTask(Dungeons.getDungeonCore()));
+                if (config.getInt("party_maximum", 0) >= PartyManager.getMembers(p).size()) {
+                    if (worldName != null) {
+                        File srcDir = new File(Dungeons.getDungeonCore().getDataFolder(), "Worlds/" + worldName);
+                        File srcNormalDir = new File(Bukkit.getServer().getWorldContainer(), worldName);
+                        if (srcDir.exists() || srcNormalDir.exists()) {
+                            if (config.contains("name") && config.getString("name") != null) {
+                                if (checkStatus(players)) {
+                                    if (checkReq(players, dungeonID)) {
+                                        updateStatus(players);
+                                        players.forEach(player -> Chat.sendMessage(player,
+                                                Objects.requireNonNull(Files.getMessage().getString("user.start_dungeon"))
+                                                        .replace("<name>", Objects.requireNonNull(config.getString("name")))));
+                                        copy(worldName, worldName + "_" + p.getName() + "_" + dungeonID);
+                                        String locationJoin = config.getString("location.join");
+                                        if (locationJoin != null) {
+                                            double x = Double.parseDouble(locationJoin.split(";")[0]);
+                                            double y = Double.parseDouble(locationJoin.split(";")[1]);
+                                            double z = Double.parseDouble(locationJoin.split(";")[2]);
+                                            float yaw;
+                                            float pitch;
+                                            if (locationJoin.split(";").length == 5) {
+                                                yaw = Float.parseFloat(locationJoin.split(";")[3]);
+                                                pitch = Float.parseFloat(locationJoin.split(";")[4]);
+                                            } else {
+                                                pitch = 0;
+                                                yaw = 0;
+                                            }
+                                            World world = Bukkit.getWorld(worldName + "_" + p.getName() + "_" + dungeonID);
+                                            if (world != null) {
+                                                CountdownTimer countdownTimer = new CountdownTimer(Dungeons.getDungeonCore(), config.getInt("times.start", 3),
+                                                        () -> players.forEach(player -> Chat.sendMessage(player, Objects.requireNonNull(Files.getMessage().getString("dungeons.times.start_soon")))),
+                                                        (t) -> {
+                                                            if (Files.getConfig().getIntegerList("dungeon.show_countdown_at").contains(t.getSecondsLeft())) {
+                                                                players.forEach(player -> Chat.sendMessage(player,
+                                                                        Objects.requireNonNull(Files.getMessage().getString("dungeons.times.start")).replace("<second>", String.valueOf(t.getSecondsLeft()))));
                                                             }
+                                                        },
+                                                        () -> {
+                                                            Location location = new Location(world, x, y, z, yaw, pitch);
+                                                            players.forEach(player -> {
+                                                                gamemode.put(player, player.getGameMode());
+                                                                player.teleport(location);
+                                                                lives.put(player.getName() + "_" + dungeonID, getDefaultLives(player, dungeonID));
+                                                                List<String> commands = config.getStringList("commands.join");
+                                                                if (!commands.isEmpty()) {
+                                                                    commands.forEach(cmd -> new BukkitRunnable() {
+                                                                        @Override
+                                                                        public void run() {
+                                                                            Dungeons.getDungeonCore().getServer().dispatchCommand(Dungeons.getDungeonCore().getServer().getConsoleSender(), PlaceholderAPI.setPlaceholders(player, cmd));
+                                                                        }
+                                                                    }.runTask(Dungeons.getDungeonCore()));
+                                                                }
+                                                            });
+                                                            checkPoints.put(PartyManager.getPlayer(p).getName() + "_" + dungeonID, location);
+                                                            dungeon.put(p, dungeonID);
+                                                            stage.put(p.getName() + "_" + dungeonID, 0);
+                                                            nextStage(p);
                                                         });
-                                                        checkPoints.put(PartyManager.getPlayer(p).getName() + "_" + dungeonID, location);
-                                                        dungeon.put(p, dungeonID);
-                                                        stage.put(p.getName() + "_" + dungeonID, 0);
-                                                        nextStage(p);
-                                                    });
-                                            countdownTimer.scheduleTimer();
+                                                countdownTimer.scheduleTimer();
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
+                    }
+                } else {
+                    if (config.getInt("party_maximum", 0) > 0) {
+                        PartyManager.getMembers(p).forEach(player -> Chat.sendMessage(player, Objects.requireNonNull(Files.getMessage().getString("party.full_party"))
+                                .replace("<dungeon>", Objects.requireNonNull(config.getString("name")))
+                                .replace("<amount>", String.valueOf(config.getInt("party_maximum", 0)))
+                        ));
+                    } else {
+                        PartyManager.getMembers(p).forEach(player -> Chat.sendMessage(player, Objects.requireNonNull(Files.getMessage().getString("party.not_accept_party"))
+                                .replace("<dungeon>", Objects.requireNonNull(config.getString("name")))
+                        ));
                     }
                 }
             }

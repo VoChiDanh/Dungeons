@@ -27,6 +27,8 @@ party:
   expired_invite: "&cParty invitation for <player> has expired"
   not_invited: "&cYou are not invited to this party"
   in_dungeon: "&cYou can't invited <player>. You need out dungeon!"
+  full_party: "&cDungeon <dungeon> only accept party has <amount> players!"
+  not_accept_party: "&cDungeon <dungeon> cannot be joined in party, only for individuals"
   help:
     - "&a/dungeons party create <id> - Create Party with ID"
     - "&a/dungeons party rename <name> - Rename Party Display"

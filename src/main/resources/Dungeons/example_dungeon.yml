@@ -1,6 +1,7 @@
 name: "&aExample Dungeon"
 world: ExampleDungeonWorld
 lives: 3
+party_maximum: 3
 times:
   start: 5
   complete: 5

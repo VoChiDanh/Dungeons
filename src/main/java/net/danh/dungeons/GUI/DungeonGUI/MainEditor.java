@@ -79,8 +79,25 @@ public class MainEditor extends BasicGUI {
                 Chat.sendMessage(clicker, "&bDungeon lives:");
             }
         }));
+        Item party_maximum = new Item.ItemBuilder(Material.IRON_BOOTS).displayName(Chat.normalColorize("&bDungeon Party Maximum")).lore(config.contains("party_maximum") ? Chat.normalColorize("&7" + config.getInt("party_maximum", 0)) : "").build();
+        setItem(new ItemSection(3, party_maximum, "party_maximum", e -> {
+            if (e.getWhoClicked() instanceof Player) {
+                Player clicker = (Player) e.getWhoClicked();
+                if (Editor.editorDungeonInfo.containsKey(clicker.getName() + "_" + dungeon)) {
+                    Editor.editorDungeonInfo.replace(clicker.getName() + "_" + dungeon, "party_maximum");
+                } else Editor.editorDungeonInfo.put(clicker.getName() + "_" + dungeon, "party_maximum");
+                if (Editor.editorType.containsKey(clicker)) {
+                    Editor.editorType.replace(clicker, "chat");
+                } else Editor.editorType.put(clicker, "chat");
+                if (Editor.editorChatType.containsKey(clicker)) {
+                    Editor.editorChatType.replace(clicker, "int");
+                } else Editor.editorChatType.put(clicker, "int");
+                clicker.closeInventory();
+                Chat.sendMessage(clicker, "&bDungeon Party Maximum:");
+            }
+        }));
         Item startTimes = new Item.ItemBuilder(Material.CLOCK).displayName(Chat.normalColorize("&bDungeon Start Times")).lore(config.contains("times.start") ? Chat.normalColorize("&7" + config.getInt("times.start")) : "").build();
-        setItem(new ItemSection(3, startTimes, "dungeon_start_times", e -> {
+        setItem(new ItemSection(4, startTimes, "dungeon_start_times", e -> {
             if (e.getWhoClicked() instanceof Player) {
                 Player clicker = (Player) e.getWhoClicked();
                 if (Editor.editorDungeonInfo.containsKey(clicker.getName() + "_" + dungeon)) {
@@ -97,7 +114,7 @@ public class MainEditor extends BasicGUI {
             }
         }));
         Item completeTimes = new Item.ItemBuilder(Material.CLOCK).displayName(Chat.normalColorize("&bDungeon Complete Times")).lore(config.contains("times.complete") ? Chat.normalColorize("&7" + config.getInt("times.complete")) : "").build();
-        setItem(new ItemSection(4, completeTimes, "dungeon_complete_times", e -> {
+        setItem(new ItemSection(5, completeTimes, "dungeon_complete_times", e -> {
             if (e.getWhoClicked() instanceof Player) {
                 Player clicker = (Player) e.getWhoClicked();
                 if (Editor.editorDungeonInfo.containsKey(clicker.getName() + "_" + dungeon)) {
@@ -114,7 +131,7 @@ public class MainEditor extends BasicGUI {
             }
         }));
         Item startLocation = new Item.ItemBuilder(Material.COMPASS).displayName(Chat.normalColorize("&bDungeon Start Location")).lore(config.contains("location.join") ? Chat.normalColorize("&7" + config.getString("location.join")) : "").build();
-        setItem(new ItemSection(5, startLocation, "dungeon_start_location", e -> {
+        setItem(new ItemSection(6, startLocation, "dungeon_start_location", e -> {
             if (e.getWhoClicked() instanceof Player) {
                 Player clicker = (Player) e.getWhoClicked();
                 if (Editor.editorDungeonInfo.containsKey(clicker.getName() + "_" + dungeon)) {
@@ -128,7 +145,7 @@ public class MainEditor extends BasicGUI {
             }
         }));
         Item completeLocation = new Item.ItemBuilder(Material.COMPASS).displayName(Chat.normalColorize("&bDungeon Complete Location")).lore(config.contains("location.complete") ? Chat.normalColorize("&7" + config.getString("location.complete")) : "").build();
-        setItem(new ItemSection(6, completeLocation, "dungeon_complete_location", e -> {
+        setItem(new ItemSection(7, completeLocation, "dungeon_complete_location", e -> {
             if (e.getWhoClicked() instanceof Player) {
                 Player clicker = (Player) e.getWhoClicked();
                 if (Editor.editorDungeonInfo.containsKey(clicker.getName() + "_" + dungeon)) {
@@ -142,7 +159,7 @@ public class MainEditor extends BasicGUI {
             }
         }));
         Item requirementsInfo = new Item.ItemBuilder(Material.RED_DYE).displayName(Chat.normalColorize("&bDungeon Requirements Info")).lore(config.contains("requirements.info") ? Chat.normalColorize(config.getStringList("requirements.info")) : Chat.normalColorize(Collections.singletonList("&7"))).build();
-        setItem(new ItemSection(7, requirementsInfo, "dungeon_requirements_info", e -> {
+        setItem(new ItemSection(8, requirementsInfo, "dungeon_requirements_info", e -> {
             if (e.getWhoClicked() instanceof Player) {
                 Player clicker = (Player) e.getWhoClicked();
                 if (Editor.editorDungeonInfo.containsKey(clicker.getName() + "_" + dungeon)) {
@@ -159,7 +176,7 @@ public class MainEditor extends BasicGUI {
             }
         }));
         Item requirementsItem = new Item.ItemBuilder(Material.IRON_BOOTS).displayName(Chat.normalColorize("&bDungeon Requirements Item")).lore(config.contains("requirements.item") ? Chat.normalColorize(config.getStringList("requirements.item")) : Chat.normalColorize(Collections.singletonList("&7"))).build();
-        setItem(new ItemSection(8, requirementsItem, "dungeon_requirements_item", e -> {
+        setItem(new ItemSection(9, requirementsItem, "dungeon_requirements_item", e -> {
             if (e.getWhoClicked() instanceof Player) {
                 Player clicker = (Player) e.getWhoClicked();
                 if (Editor.editorDungeonInfo.containsKey(clicker.getName() + "_" + dungeon)) {
@@ -176,7 +193,7 @@ public class MainEditor extends BasicGUI {
             }
         }));
         Item requirementsInfoLore = new Item.ItemBuilder(Material.PAPER).displayName(Chat.normalColorize("&bDungeon Requirements Info Lore")).lore(config.contains("requirements.info_lore") ? Chat.normalColorize(config.getStringList("requirements.info_lore")) : Chat.normalColorize(Collections.singletonList("&7"))).build();
-        setItem(new ItemSection(9, requirementsInfoLore, "dungeon_requirements_info_lore", e -> {
+        setItem(new ItemSection(10, requirementsInfoLore, "dungeon_requirements_info_lore", e -> {
             if (e.getWhoClicked() instanceof Player) {
                 Player clicker = (Player) e.getWhoClicked();
                 if (Editor.editorDungeonInfo.containsKey(clicker.getName() + "_" + dungeon)) {
@@ -194,7 +211,7 @@ public class MainEditor extends BasicGUI {
             }
         }));
         Item requirementsItemLore = new Item.ItemBuilder(Material.IRON_AXE).displayName(Chat.normalColorize("&bDungeon Requirements Item Lore")).lore(config.contains("requirements.item_lore") ? Chat.normalColorize(config.getStringList("requirements.item_lore")) : Chat.normalColorize(Collections.singletonList("&7"))).build();
-        setItem(new ItemSection(10, requirementsItemLore, "dungeon_requirements_item_lore", e -> {
+        setItem(new ItemSection(11, requirementsItemLore, "dungeon_requirements_item_lore", e -> {
             if (e.getWhoClicked() instanceof Player) {
                 Player clicker = (Player) e.getWhoClicked();
                 if (Editor.editorDungeonInfo.containsKey(clicker.getName() + "_" + dungeon)) {
@@ -212,7 +229,7 @@ public class MainEditor extends BasicGUI {
             }
         }));
         Item commandJoin = new Item.ItemBuilder(Material.ENCHANTED_BOOK).displayName(Chat.normalColorize("&bDungeon Command Join")).lore(config.contains("commands.join") ? Chat.normalColorize(config.getStringList("commands.join")) : Chat.normalColorize(Collections.singletonList("&7"))).build();
-        setItem(new ItemSection(11, commandJoin, "dungeon_commands_join", e -> {
+        setItem(new ItemSection(12, commandJoin, "dungeon_commands_join", e -> {
             if (e.getWhoClicked() instanceof Player) {
                 Player clicker = (Player) e.getWhoClicked();
                 if (Editor.editorDungeonInfo.containsKey(clicker.getName() + "_" + dungeon)) {
@@ -229,7 +246,7 @@ public class MainEditor extends BasicGUI {
             }
         }));
         Item commandComplete = new Item.ItemBuilder(Material.ENCHANTED_BOOK).displayName(Chat.normalColorize("&bDungeon Command Complete")).lore(config.contains("commands.complete") ? Chat.normalColorize(config.getStringList("commands.complete")) : Chat.normalColorize(Collections.singletonList("&7"))).build();
-        setItem(new ItemSection(12, commandComplete, "dungeon_commands_complete", e -> {
+        setItem(new ItemSection(13, commandComplete, "dungeon_commands_complete", e -> {
             if (e.getWhoClicked() instanceof Player) {
                 Player clicker = (Player) e.getWhoClicked();
                 if (Editor.editorDungeonInfo.containsKey(clicker.getName() + "_" + dungeon)) {
@@ -246,7 +263,7 @@ public class MainEditor extends BasicGUI {
             }
         }));
         Item stage = new Item.ItemBuilder(Material.EMERALD).displayName(Chat.normalColorize("&bDungeon Stages")).lore(config.contains("stages") ? Chat.normalColorize("&7" + Objects.requireNonNull(config.getConfigurationSection("stages")).getKeys(false).size() + "&7 Stages") : Chat.normalColorize("&7")).build();
-        setItem(new ItemSection(13, stage, "dungeon_stages", e -> {
+        setItem(new ItemSection(14, stage, "dungeon_stages", e -> {
             if (e.getWhoClicked() instanceof Player) {
                 Player clicker = (Player) e.getWhoClicked();
                 if (Editor.editorDungeonInfo.containsKey(clicker.getName() + "_" + dungeon)) {

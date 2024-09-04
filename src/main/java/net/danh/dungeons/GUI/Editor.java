@@ -86,6 +86,11 @@ public class Editor {
                             edit(p, "lives", String.valueOf(chatNumber), dungeon);
                         }
                     }
+                    if (task.equalsIgnoreCase("party_maximum")) {
+                        if (Editor.editorChatType.get(p).equalsIgnoreCase("int")) {
+                            edit(p, "party_maximum", String.valueOf(chatNumber), dungeon);
+                        }
+                    }
                     if (task.equalsIgnoreCase("dungeon_complete_times")) {
                         if (Editor.editorChatType.get(p).equalsIgnoreCase("int")) {
                             edit(p, "times.complete", String.valueOf(chatNumber), dungeon);
