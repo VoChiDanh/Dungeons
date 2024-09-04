@@ -29,7 +29,7 @@ public class Death implements Listener {
         Player p = e.getPlayer();
         if (StageManager.inDungeon(PartyManager.getPlayer(p))) {
             if (DungeonsAPI.getLives(p) <= 1) {
-                p.teleport(StageManager.checkPoints.get(p.getName() + "_" + DungeonsAPI.getDungeon(PartyManager.getPlayer(p))));
+                p.teleport(StageManager.checkPoints.get(PartyManager.getPlayer(p).getName() + "_" + DungeonsAPI.getDungeon(PartyManager.getPlayer(p))));
                 p.setGameMode(GameMode.SPECTATOR);
                 if (!PartyManager.inParty(p)) {
                     StageManager.endDungeon(p, false, true);

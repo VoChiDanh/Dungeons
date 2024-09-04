@@ -421,7 +421,6 @@ public class StageManager {
                                                             gamemode.put(player, player.getGameMode());
                                                             player.teleport(location);
                                                             lives.put(player.getName() + "_" + dungeonID, getDefaultLives(player, dungeonID));
-                                                            checkPoints.put(player.getName() + "_" + dungeonID, location);
                                                             List<String> commands = config.getStringList("commands.join");
                                                             if (!commands.isEmpty()) {
                                                                 commands.forEach(cmd -> new BukkitRunnable() {
@@ -432,6 +431,7 @@ public class StageManager {
                                                                 }.runTask(Dungeons.getDungeonCore()));
                                                             }
                                                         });
+                                                        checkPoints.put(PartyManager.getPlayer(p).getName() + "_" + dungeonID, location);
                                                         dungeon.put(p, dungeonID);
                                                         stage.put(p.getName() + "_" + dungeonID, 0);
                                                         nextStage(p);
@@ -481,7 +481,6 @@ public class StageManager {
                                             player.removePotionEffect(PotionEffectType.BLINDNESS);
                                             player.setGameMode(gamemode.get(player));
                                             lives.remove(player.getName() + "_" + dungeonID);
-                                            checkPoints.remove(player.getName() + "_" + dungeonID);
                                             status.replace(player, DungeonStatus.NONE);
                                             if (isComplete) {
                                                 List<String> commands = config.getStringList("commands.complete");
@@ -497,6 +496,7 @@ public class StageManager {
                                         });
                                         delete(config.getString("world") + "_" + p.getName() + "_" + dungeonID);
                                         stage.remove(p.getName() + "_" + dungeonID);
+                                        checkPoints.remove(PartyManager.getPlayer(p).getName() + "_" + dungeonID);
                                         dungeon.remove(p, dungeonID);
                                         gamemode.remove(p);
                                     });
@@ -504,6 +504,31 @@ public class StageManager {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    public static void quitParty(Player p) {
+        if (PartyManager.inParty(p)) {
+            Player leader = PartyManager.getPartyLeader(p);
+            if (leader != null && leader != p) {
+                if (inDungeon(p)) {
+                    String dungeonID = getPlayerDungeon(p);
+                    FileConfiguration config = SimpleConfigurationManager.get().get("Dungeons/" + dungeonID + ".yml");
+                    String locationComplete = config.getString("location.complete");
+                    if (locationComplete != null) {
+                        World world = Bukkit.getWorld(locationComplete.split(";")[0]);
+                        Location rLocation = getLocation(locationComplete.replace(locationComplete.split(";")[0] + ";", ""), world);
+                        lives.remove(p.getName() + "_" + dungeonID);
+                        status.replace(p, DungeonStatus.NONE);
+                        stage.remove(PartyManager.getPlayer(p).getName() + "_" + dungeonID);
+                        checkPoints.remove(PartyManager.getPlayer(p).getName() + "_" + dungeonID);
+                        dungeon.remove(PartyManager.getPlayer(p), dungeonID);
+                        gamemode.remove(PartyManager.getPlayer(p));
+                        p.teleport(rLocation);
+                    }
+                }
+                PartyManager.kick(p);
             }
         }
     }

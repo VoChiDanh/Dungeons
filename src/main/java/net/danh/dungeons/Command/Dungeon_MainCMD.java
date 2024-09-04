@@ -36,10 +36,7 @@ public class Dungeon_MainCMD extends CMDBase {
                             }
                             if (args[1].equalsIgnoreCase("leave")) {
                                 if (PartyManager.inParty(p)) {
-                                    Player leader = PartyManager.getPartyLeader(p);
-                                    if (leader != null && leader != p) {
-                                        PartyManager.kick(p);
-                                    }
+                                    StageManager.quitParty(p);
                                 }
                             }
                         } else if (args.length == 3) {
