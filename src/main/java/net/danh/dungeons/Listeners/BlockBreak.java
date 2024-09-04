@@ -99,14 +99,12 @@ public class BlockBreak implements Listener {
                             int width = dungeonManager.getConfig().getInt("stages.stage_" + stageNumber + ".width");
                             int depth = dungeonManager.getConfig().getInt("stages.stage_" + stageNumber + ".depth");
                             Location breakLocation = StageManager.getLocation(location, world);
-                            if (e.getBlock().getLocation().distanceSquared(breakLocation) <= 3) {
-                                if (breakLocation.getBlock().getType().equals(e.getBlock().getType())) {
-                                    BreakDirection direction = BreakDirection.getFacingDirection(p);
-                                    List<Location> blocks = direction.getRadius(e.getBlock(), depth, width);
-                                    for (Location b_lo : blocks)
-                                        b_lo.getBlock().setType(Material.AIR);
-                                    StageManager.nextStage(p);
-                                }
+                            if (e.getBlock().getLocation().distanceSquared(breakLocation) <= 5) {
+                                BreakDirection direction = BreakDirection.getFacingDirection(e.getBlock());
+                                List<Location> blocks = direction.getRadius(e.getBlock(), depth, width);
+                                for (Location b_lo : blocks)
+                                    b_lo.getBlock().setType(Material.AIR);
+                                StageManager.nextStage(p);
                             }
                         }
                     }
@@ -139,10 +137,10 @@ public class BlockBreak implements Listener {
         WEST(-1, 0, 0),
         UP(0, 1, 0),
         DOWN(0, -1, 0);
-        private Vector addition;
-        private boolean isX;
-        private boolean isY;
-        private boolean isZ;
+        private final Vector addition;
+        private final boolean isX;
+        private final boolean isY;
+        private final boolean isZ;
 
         BreakDirection(int x, int y, int z) {
             this.addition = new Vector(x, y, z);
@@ -151,8 +149,8 @@ public class BlockBreak implements Listener {
             this.isZ = z != 0;
         }
 
-        public static BreakDirection getFacingDirection(@NotNull Player player) {
-            Vector dir = player.getLocation().getDirection().normalize();
+        public static BreakDirection getFacingDirection(@NotNull Block block) {
+            Vector dir = block.getLocation().getDirection().normalize();
             double x = dir.getX();
             double y = dir.getY();
             double z = dir.getZ();

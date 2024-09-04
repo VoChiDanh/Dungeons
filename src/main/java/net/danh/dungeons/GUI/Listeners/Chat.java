@@ -5,7 +5,6 @@ import net.danh.dungeons.GUI.DungeonGUI.MainEditor;
 import net.danh.dungeons.GUI.Editor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.jetbrains.annotations.NotNull;
@@ -17,7 +16,7 @@ public class Chat implements Listener {
     public static HashMap<String, String> chatEdit = new HashMap<>();
     public static HashMap<String, Integer> chatNumberEdit = new HashMap<>();
 
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
+    @EventHandler(ignoreCancelled = true)
     public void onChat(@NotNull PlayerChatEvent e) {
         Player p = e.getPlayer();
         if (Editor.editorDungeon.containsKey(p)) {

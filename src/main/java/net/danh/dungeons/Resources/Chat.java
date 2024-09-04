@@ -1,15 +1,20 @@
 package net.danh.dungeons.Resources;
 
 import net.danh.dungeons.Dungeons;
+import net.danh.dungeons.NMS.NMSAssistant;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Chat {
+
+    private static final Pattern hexPattern = Pattern.compile("<#([A-Fa-f0-9]){6}>");
 
     @Contract("_ -> new")
     public static @NotNull String normalColorize(String string) {
@@ -117,7 +122,25 @@ public class Chat {
         if (message.contains("</strikethrough>")) message = message.replace("</strikethrough>", "");
         if (message.contains("</underlined>")) message = message.replace("</underlined>", "");
         if (message.contains("</reset>")) message = message.replace("</reset>", "");
-        return message;
+        return applyColor(message, true);
+    }
+
+
+    public static String applyColor(String message, boolean r) {
+        if (!r) {
+            return message;
+        } else if (new NMSAssistant().isVersionLessThan(16)) {
+            return ChatColor.translateAlternateColorCodes('&', message);
+        } else {
+            for (Matcher matcher = hexPattern.matcher(message); matcher.find(); matcher = hexPattern.matcher(message)) {
+                net.md_5.bungee.api.ChatColor hexColor = net.md_5.bungee.api.ChatColor.of(matcher.group().substring(1, matcher.group().length() - 1));
+                String before = message.substring(0, matcher.start());
+                String after = message.substring(matcher.end());
+                message = before + hexColor + after;
+            }
+
+            return net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', message);
+        }
     }
 
     public static @NotNull String caseOnWords(@NotNull String input) {

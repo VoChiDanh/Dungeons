@@ -56,7 +56,7 @@ public class StageManager {
             }
 
             Path finalSrcDir = srcDir;
-            java.nio.file.Files.walk(srcDir).forEach(source -> {
+            java.nio.file.Files.walk(srcDir).filter(Objects::nonNull).forEach(source -> {
                 Path destination = destDir.resolve(finalSrcDir.relativize(source));
                 try {
                     if (java.nio.file.Files.isDirectory(source)) {
@@ -91,12 +91,10 @@ public class StageManager {
 
         boolean unloaded = Bukkit.getServer().unloadWorld(target, false);
         if (!unloaded) {
-            Dungeons.getDungeonCore().getLogger().warning("Failed to unload world: " + target);
             return;
         }
 
         if (!java.nio.file.Files.exists(dir)) {
-            Dungeons.getDungeonCore().getLogger().warning("Directory does not exist: " + dir.toString());
             return;
         }
 
@@ -714,7 +712,10 @@ public class StageManager {
         int stageNumber = getStageNumber(PartyManager.getPlayer(p));
         if (config.contains("stages.stage_" + (stageNumber + 1))) {
             stage.replace(p.getName() + "_" + getPlayerDungeon(PartyManager.getPlayer(p)), stageNumber + 1);
-            Chat.sendMessage(p, getStageDisplay(p));
+            if (!PartyManager.inParty(p))
+                Chat.sendMessage(p, getStageDisplay(p));
+            else PartyManager.getMembers(p).forEach(player ->
+                    Chat.sendMessage(player, getStageDisplay(PartyManager.getPlayer(player))));
             if (config.contains("stages.stage_" + (stageNumber + 1) + ".pre_stage")) {
                 String id = config.getString("stages.stage_" + (stageNumber + 1) + ".id");
                 String id_pre = config.getString("stages.stage_" + (stageNumber + 1) + ".pre_stage.id");
