@@ -28,7 +28,7 @@ public class Death implements Listener {
     public void onRespawn(@NotNull PlayerPostRespawnEvent e) {
         Player p = e.getPlayer();
         if (StageManager.inDungeon(PartyManager.getPlayer(p))) {
-            if (DungeonsAPI.getLives(p) <= 1) {
+            if (DungeonsAPI.getLives(p) < 1) {
                 p.teleport(StageManager.checkPoints.get(PartyManager.getPlayer(p).getName() + "_" + DungeonsAPI.getDungeon(PartyManager.getPlayer(p))));
                 p.setGameMode(GameMode.SPECTATOR);
                 if (!PartyManager.inParty(p)) {

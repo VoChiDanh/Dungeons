@@ -519,12 +519,7 @@ public class StageManager {
                     if (locationComplete != null) {
                         World world = Bukkit.getWorld(locationComplete.split(";")[0]);
                         Location rLocation = getLocation(locationComplete.replace(locationComplete.split(";")[0] + ";", ""), world);
-                        lives.remove(p.getName() + "_" + dungeonID);
                         status.replace(p, DungeonStatus.NONE);
-                        stage.remove(PartyManager.getPlayer(p).getName() + "_" + dungeonID);
-                        checkPoints.remove(PartyManager.getPlayer(p).getName() + "_" + dungeonID);
-                        dungeon.remove(PartyManager.getPlayer(p), dungeonID);
-                        gamemode.remove(PartyManager.getPlayer(p));
                         p.teleport(rLocation);
                     }
                 }

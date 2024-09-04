@@ -10,6 +10,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -82,10 +83,11 @@ public class BlockBreak implements Listener {
         }
     }
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
     public void onBreak(@NotNull BlockBreakEvent e) {
         Player p = PartyManager.getPlayer(e.getPlayer());
         if (StageManager.inDungeon(p)) {
+            e.setCancelled(true);
             String dungeonID = StageManager.getPlayerDungeon(p);
             DungeonManager dungeonManager = new DungeonManager(dungeonID);
             int stageNumber = StageManager.getStageNumber(p);
@@ -110,7 +112,6 @@ public class BlockBreak implements Listener {
                     }
                 }
             }
-            e.setCancelled(true);
         }
     }
 

@@ -32,7 +32,9 @@ public class Dungeon_MainCMD extends CMDBase {
                     if (args[0].equalsIgnoreCase("party")) {
                         if (args.length == 2) {
                             if (args[1].equalsIgnoreCase("disband")) {
-                                PartyManager.disbandParty(p);
+                                if (PartyManager.inParty(p)) {
+                                    PartyManager.disbandParty(p);
+                                }
                             }
                             if (args[1].equalsIgnoreCase("leave")) {
                                 if (PartyManager.inParty(p)) {

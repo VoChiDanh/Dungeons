@@ -23,10 +23,18 @@ public class PartyManager {
 
     public static void createParty(Player p, String id) {
         if (!partyManager.containsValue(id)) {
-            partyManager.put(p.getName(), id);
-            partyInformation.put(id + PartyData.leader.getString(), p.getName());
-            partyInformation.put(id + PartyData.display.getString(), getPartyDisplay(id));
-            partyMember.put(id, Collections.singletonList(p.getName()));
+            if (partyManager.containsKey(p.getName()))
+                partyManager.replace(p.getName(), id);
+            else partyManager.put(p.getName(), id);
+            if (partyInformation.containsKey(id + PartyData.leader.getString()))
+                partyInformation.replace(id + PartyData.leader.getString(), p.getName());
+            else partyInformation.put(id + PartyData.leader.getString(), p.getName());
+            if (partyInformation.containsKey(id + PartyData.display.getString()))
+                partyInformation.replace(id + PartyData.display.getString(), getPartyDisplay(id));
+            else partyInformation.put(id + PartyData.display.getString(), getPartyDisplay(id));
+            if (partyMember.containsKey(id))
+                partyMember.replace(id, Collections.singletonList(p.getName()));
+            else partyMember.put(id, Collections.singletonList(p.getName()));
             Chat.sendMessage(p, Objects.requireNonNull(Files.getMessage().getString("party.create"))
                     .replace("<name>", getPartyDisplay(id)));
         } else Chat.sendMessage(p, Objects.requireNonNull(Files.getMessage().getString("party.already_has_name"))
@@ -38,6 +46,8 @@ public class PartyManager {
         if (id != null) {
             if (partyManager.containsValue(id) && partyManager.containsKey(p.getName())) {
                 if (partyInformation.get(id + PartyData.leader.getString()).contains(p.getName())) {
+                    if (StageManager.inDungeon(p))
+                        StageManager.endPartyDungeon(p, false, true);
                     getMembers(p).forEach(partyMember -> Chat.sendMessage(partyMember, Objects.requireNonNull(Files.getMessage().getString("party.disband"))
                             .replace("<name>", getPartyDisplay(id))));
                     List<String> pInfo = new ArrayList<>(partyInformation.keySet());
@@ -48,7 +58,7 @@ public class PartyManager {
                     List<String> pManager = new ArrayList<>(partyManager.keySet());
                     for (String key : pManager) {
                         if (partyManager.get(key).equalsIgnoreCase(id))
-                            partyManager.remove(key, id);
+                            partyManager.remove(key);
                     }
                     partyMember.remove(id);
                 } else Chat.sendMessage(p, Files.getMessage().getString("party.not_leader"));
