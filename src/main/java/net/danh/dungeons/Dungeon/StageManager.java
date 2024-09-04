@@ -128,6 +128,7 @@ public class StageManager {
                 }
             }
         }
+        reloadDungeons();
     }
 
     public static void reloadDungeons() {
@@ -709,11 +710,10 @@ public class StageManager {
 
     public static void nextStage(@NotNull Player p) {
         p = PartyManager.getPlayer(p);
-        String dungeonID = dungeon.get(p);
         FileConfiguration config = SimpleConfigurationManager.get().get("Dungeons/" + dungeon.get(p) + ".yml");
-        int stageNumber = stage.get(p.getName() + "_" + dungeonID);
+        int stageNumber = getStageNumber(PartyManager.getPlayer(p));
         if (config.contains("stages.stage_" + (stageNumber + 1))) {
-            stage.replace(p.getName() + "_" + dungeon.get(p), stageNumber + 1);
+            stage.replace(p.getName() + "_" + getPlayerDungeon(PartyManager.getPlayer(p)), stageNumber + 1);
             Chat.sendMessage(p, getStageDisplay(p));
             if (config.contains("stages.stage_" + (stageNumber + 1) + ".pre_stage")) {
                 String id = config.getString("stages.stage_" + (stageNumber + 1) + ".id");
@@ -732,14 +732,14 @@ public class StageManager {
     }
 
     public static int getStageNumber(Player p) {
-        if (inDungeon(p)) {
-            return stage.get(p.getName() + "_" + dungeon.get(p));
+        if (inDungeon(PartyManager.getPlayer(p))) {
+            return stage.get(PartyManager.getPlayer(p).getName() + "_" + dungeon.get(p));
         }
         return -1;
     }
 
     public static String getPlayerDungeon(Player p) {
-        return dungeon.getOrDefault(p, null);
+        return dungeon.getOrDefault(PartyManager.getPlayer(p), null);
     }
 
     public static boolean inDungeon(Player p) {
