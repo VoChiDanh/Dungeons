@@ -42,7 +42,7 @@ public class Death implements Listener {
             } else {
                 StageManager.lives.replace(p.getName() + "_" + DungeonsAPI.getDungeon(PartyManager.getPlayer(p)),
                         StageManager.lives.get(p.getName() + "_" + DungeonsAPI.getDungeon(PartyManager.getPlayer(p))) - 1);
-                p.teleport(StageManager.checkPoints.get(p.getName() + "_" + DungeonsAPI.getDungeon(PartyManager.getPlayer(p))));
+                p.teleport(StageManager.checkPoints.get(PartyManager.getPlayer(p).getName() + "_" + DungeonsAPI.getDungeon(PartyManager.getPlayer(p))));
             }
         }
     }
