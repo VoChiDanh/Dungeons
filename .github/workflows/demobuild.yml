@@ -1,16 +1,16 @@
 name: DemoBuild
 on:
   push:
-    branches: [ master ]
+    branches: [ dev ]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
+      - uses: actions/checkout@4
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'adopt'
           cache: maven
       - name: Build with Maven
@@ -37,7 +37,5 @@ jobs:
             
             [SpigotMC](https://www.spigotmc.org/resources/118953/)
             [Hangar](https://hangar.papermc.io/VoChiDanh/Dungeons)
-            [Dungeon Editor Tutorial](https://youtu.be/fOpgUL5dkdo)
-            [Dungeon Showcase](https://youtu.be/kUcsXGrBRVs)
-            [Example Dungeon Files](https://github.com/VoChiDanh/Dungeons/tree/master/ExampleDungeon)
+            NOTE: This is a demo version of recoding so don't use it if you don't want to be a tester
           filename: "./target/Dungeons.jar"

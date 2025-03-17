@@ -1,25 +1,6 @@
-version: 3
+version: 0
 check_update: true
 
 settings:
   debug: false
   prefix: "&f[ &bDungeons&f ]"
-
-party:
-  default_display: "&7[ &a<name> &7]"
-  timeout_invite: 120
-
-dungeon:
-  black_list_command:
-    - tpa
-    - tp
-    - tpaccept
-    - tpyes
-    - spawn
-    - warp
-  show_countdown_at:
-    - 10
-    - 5
-    - 3
-    - 2
-    - 1

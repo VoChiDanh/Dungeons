@@ -1,6 +1,6 @@
 package net.danh.dungeons.Resources;
 
-import net.danh.dungeons.Dungeons;
+import net.danh.dungeons.DungeonsMain;
 import net.danh.dungeons.NMS.NMSAssistant;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -32,7 +32,7 @@ public class Chat {
     }
 
     public static void debug(String message) {
-        if (Files.getConfig().getBoolean("settings.debug")) Dungeons.getDungeonCore().getLogger().warning(message);
+        if (Files.getConfig().getBoolean("settings.debug")) DungeonsMain.getDungeonCore().getLogger().warning(message);
     }
 
     @NotNull
@@ -129,7 +129,7 @@ public class Chat {
     public static String applyColor(String message, boolean r) {
         if (!r) {
             return message;
-        } else if (new NMSAssistant().isVersionLessThan(16)) {
+        } else if (new NMSAssistant().isVersionLessThan(1, 16, 0)) {
             return ChatColor.translateAlternateColorCodes('&', message);
         } else {
             for (Matcher matcher = hexPattern.matcher(message); matcher.find(); matcher = hexPattern.matcher(message)) {

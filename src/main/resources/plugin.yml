@@ -1,14 +1,8 @@
 name: "${project.name}"
 version: ${project.version}
-main: net.danh.dungeons.Dungeons
-api-version: '1.13'
+main: net.danh.dungeons.DungeonsMain
+api-version: '1.21'
 authors: [ VoChiDanh ]
-depend:
-  - PlaceholderAPI
-softdepend:
-  - MythicMobs
-  - MMOItems
-  - ItemEdit
 commands:
-  Dungeons:
+  dungeons:
     description: Main Commands

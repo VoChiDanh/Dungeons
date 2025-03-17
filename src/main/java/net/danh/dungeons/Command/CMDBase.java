@@ -1,6 +1,6 @@
 package net.danh.dungeons.Command;
 
-import net.danh.dungeons.Dungeons;
+import net.danh.dungeons.DungeonsMain;
 import org.bukkit.command.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -10,7 +10,7 @@ import java.util.Objects;
 public abstract class CMDBase implements CommandExecutor, TabCompleter {
 
     public CMDBase(String name) {
-        PluginCommand pluginCommand = Dungeons.getDungeonCore().getCommand(name);
+        PluginCommand pluginCommand = DungeonsMain.getDungeonCore().getCommand(name);
         Objects.requireNonNull(pluginCommand).setExecutor(this);
         pluginCommand.setTabCompleter(this);
     }
